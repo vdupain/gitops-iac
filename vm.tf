@@ -73,12 +73,13 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 #   }
 # }
 
-# resource "proxmox_virtual_environment_file" "ubuntu_cloud_image" {
-#   content_type = "iso"
-#   datastore_id = "local"
-#   node_name    = var.pve_target_node
+resource "proxmox_virtual_environment_file" "ubuntu_cloud_image" {
+  content_type = "iso"
+  datastore_id = "local"
+  node_name    = var.pve_target_node
+  overwrite = false
 
-#   source_file {
-#     path = "https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img"
-#   }
-# }
+  source_file {
+    path = "https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img"
+  }
+}
