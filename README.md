@@ -1,4 +1,4 @@
-# Configuration Proxmox pour Terraform
+# Quickstart Guide Provisionning des VMs sur Proxmox avec Terraform
 
 ## Accès PVE pour Terraform
 
@@ -21,7 +21,8 @@ pveum aclmod / -user terraform@pve -role Terraform
 ```sh
 pveum user token add terraform@pve provider --privsep=0
 ```
-```
+
+```sh
 ┌──────────────┬──────────────────────────────────────┐
 │ key          │ value                                │
 ╞══════════════╪══════════════════════════════════════╡
@@ -44,3 +45,31 @@ eval $(ssh-agent)
 ssh-add ~/.ssh/id_ed25519
 ssh-add -l
 ```
+
+## Provisionning des VMs
+
+### Initialisation du projet Terraform
+
+```sh
+terraform init
+```
+
+### Validation du code
+
+```sh
+terraform validate
+```
+
+### Création et suppression des VMs
+
+```sh
+terraform terraform apply -auto-approve
+terraform terraform destroy -auto-approve
+```
+
+
+## Docs
+
+* <https://registry.terraform.io/providers/bpg/proxmox/latest>
+* <https://blog.stephane-robert.info/docs/virtualiser/type1/proxmox/terraform/>
+
