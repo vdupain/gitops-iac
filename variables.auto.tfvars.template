@@ -1,0 +1,9 @@
+vm_cpu_cores_number    = 2
+vm_cpu_type            = "x86-64-v2-AES"
+vm_disk_size           = 10
+vm_id                  = 5000
+vm_memory_max          = 1024
+vm_memory_min          = 1024
+vm_name                = "test"
+vm_hostname            = "test"
+vm_socket_number       = 1
