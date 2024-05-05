@@ -37,3 +37,7 @@ variable "vm_socket_number" {
 variable "vm_hostname" {
   type = string
 }
+variable "vm_count" {
+    type = number
+    default = 1
+}

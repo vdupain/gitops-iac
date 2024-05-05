@@ -3,7 +3,7 @@ hostname: ${hostname}
 local-hostname: ${hostname}
 #fqdn: ${hostname}.${domain}
 manage_etc_hosts: true
-package_upgrade: true
+package_upgrade: false
 users:
   - default
   - name: ubuntu
