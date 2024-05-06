@@ -18,6 +18,7 @@ data "talos_client_configuration" "this" {
   cluster_name         = var.cluster_name
   client_configuration = talos_machine_secrets.this.client_configuration
   endpoints            = [for k, v in var.node_data.controlplanes : k]
+  nodes            = [for k, v in var.node_data.workers : k]
 }
 
 resource "talos_machine_configuration_apply" "controlplane" {
@@ -58,5 +59,11 @@ data "talos_cluster_kubeconfig" "this" {
   depends_on           = [talos_machine_bootstrap.this]
   client_configuration = talos_machine_secrets.this.client_configuration
   node                 = [for k, v in var.node_data.controlplanes : k][0]
-  wait                 = true
 }
+
+# data "talos_cluster_health" "this" {
+#   depends_on           = [talos_machine_bootstrap.this]
+#   client_configuration = talos_machine_secrets.this.client_configuration
+#   control_plane_nodes  = [for k, v in var.node_data.controlplanes : k]
+#   endpoints            = [for k, v in var.node_data.controlplanes : k]
+# }

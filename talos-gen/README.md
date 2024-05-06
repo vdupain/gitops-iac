@@ -1,5 +1,18 @@
 # Talos
 
+## Provisionner un cluster k8s
+
+```sh
+terraform apply -auto-approve
+terraform output -raw kubeconfig > kubeconfig-talos-cluster
+
+k9s --kubeconfig kubeconfig-talos-cluster
+```
+
+Et voila !
+
+En gros le provisionning Terraform pour Talos est l'équivalent de ceci en ligne de commande:
+
 ```sh
 export CONTROL_PLANE_IP=192.168.10.240
 talosctl gen config talos-proxmox-cluster https://$CONTROL_PLANE_IP:6443 --output-dir _out --force
@@ -20,4 +33,5 @@ talosctl kubeconfig .
 
 ## Docs
 
+* <https://www.talos.dev/v1.7/talos-guides/install/virtualized-platforms/proxmox/>
 * <https://github.com/siderolabs/contrib/tree/main/examples/terraform/basic>

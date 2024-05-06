@@ -30,7 +30,7 @@ variable "node_data" {
       },
       "192.168.10.241" = {
         install_disk = "/dev/sda"
-        hostname     = "cp-1"
+        hostname     = "cp-2"
       }
     }
     workers = {
