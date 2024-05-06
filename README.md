@@ -72,8 +72,8 @@ terraform validate
 ### Création et suppression des VMs
 
 ```sh
-terraform terraform apply -auto-approve
-terraform terraform destroy -auto-approve
+terraform apply -auto-approve
+terraform destroy -auto-approve
 ```
 
 
