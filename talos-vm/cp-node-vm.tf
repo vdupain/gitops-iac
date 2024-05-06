@@ -13,13 +13,13 @@ resource "proxmox_virtual_environment_vm" "talos-controle-plane" {
 
   cpu {
     type    = var.vm_cpu_type
-    cores   = var.vm_cpu_cores_number
+    cores   = 2
     sockets = var.vm_socket_number
     flags   = []
   }
 
   memory {
-    dedicated = var.vm_memory_max
+    dedicated = 2048
   }
 
   disk {
