@@ -39,7 +39,10 @@ variable "node_data" {
       "192.168.10.231" = {
         install_disk = "/dev/sda"
         hostname     = "worker-2"
-      }
-    }
+      },
+      "192.168.10.232" = {
+        install_disk = "/dev/sda"
+        hostname     = "worker-3"
+      }    }
   }
 }
