@@ -1,5 +1,5 @@
 resource "proxmox_virtual_environment_vm" "talos-worker" {
-  count     = 2
+  count     = var.vm_worker_count
   name      = "talos-worker-${count.index}"
   node_name = var.pve_target_node
   vm_id     = sum([1110, count.index])
@@ -23,8 +23,9 @@ resource "proxmox_virtual_environment_vm" "talos-worker" {
   }
 
   disk {
-    datastore_id = "local-lvm"
-    file_id      = "local:iso/nocloud-amd64-v1.7.1.img"
+    datastore_id = var.vm_datastore_id
+    #file_id      = "local:iso/nocloud-amd64-v1.7.1.img"
+    file_id      = proxmox_virtual_environment_download_file.talos_cloud_image.id
     interface    = "scsi0"
     discard      = "ignore"
     size         = var.vm_disk_size
@@ -50,7 +51,7 @@ resource "proxmox_virtual_environment_vm" "talos-worker" {
        }
      }
 
-    datastore_id         = "local-lvm"
+    datastore_id         = var.vm_datastore_id
     interface            = "ide2"
   }
 }

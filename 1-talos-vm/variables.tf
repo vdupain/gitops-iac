@@ -16,6 +16,9 @@ variable "vm_cpu_cores_number" {
 variable "vm_cpu_type" {
   type = string
 }
+variable "vm_datastore_id" {
+  type = string
+}
 variable "vm_disk_size" {
   type = number
 }
@@ -37,7 +40,9 @@ variable "vm_socket_number" {
 variable "vm_hostname" {
   type = string
 }
-variable "vm_count" {
+variable "vm_cp_count" {
     type = number
-    default = 1
+}
+variable "vm_worker_count" {
+    type = number
 }
