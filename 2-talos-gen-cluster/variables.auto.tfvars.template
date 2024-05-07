@@ -1,0 +1,2 @@
+cluster_name        = "talos-proxmox-cluster"
+cluster_endpoint    = "https://192.168.10.240:6443"
