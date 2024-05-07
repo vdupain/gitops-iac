@@ -1,4 +1,4 @@
-pve_endpoint           = "https://pved.oodrive.net"
+pve_endpoint           = "https://pve.domain"
 pve_api_user           = "user"
 pve_api_token          = "user@pve!terraform=secret"
 

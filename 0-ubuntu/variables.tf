@@ -16,6 +16,9 @@ variable "vm_cpu_cores_number" {
 variable "vm_cpu_type" {
   type = string
 }
+variable "vm_datastore_id" {
+  type = string
+}
 variable "vm_disk_size" {
   type = number
 }

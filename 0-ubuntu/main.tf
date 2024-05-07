@@ -23,7 +23,7 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   }
 
   disk {
-    datastore_id = "lvm-thin"
+    datastore_id = var.vm_datastore_id
     file_id      = "local:iso/jammy-server-cloudimg-amd64.img"
     #file_id      = proxmox_virtual_environment_file.ubuntu_cloud_image.id
     interface    = "scsi0"
@@ -51,9 +51,9 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
        }
      }
 
-    datastore_id         = "lvm-thin"
+    datastore_id         = var.vm_datastore_id
     interface            = "ide2"
     user_data_file_id    = proxmox_virtual_environment_file.cloud_user_config.id
-    #meta_data_file_id    = proxmox_virtual_environment_file.cloud_meta_config.id
+    meta_data_file_id    = proxmox_virtual_environment_file.cloud_meta_config.id
   }
 }
