@@ -1,7 +1,7 @@
 variable "cluster_name" {
   description = "A name to provide for the Talos cluster"
   type        = string
-  default     = "talos-cluster"
+  default     = "talos-proxmox-cluster"
 }
 
 variable "cluster_endpoint" {
