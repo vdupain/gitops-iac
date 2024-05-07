@@ -24,8 +24,8 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 
   disk {
     datastore_id = var.vm_datastore_id
-    file_id      = "local:iso/jammy-server-cloudimg-amd64.img"
-    #file_id      = proxmox_virtual_environment_file.ubuntu_cloud_image.id
+    #file_id      = "local:iso/jammy-server-cloudimg-amd64.img"
+    file_id      = proxmox_virtual_environment_file.ubuntu_cloud_image.id
     interface    = "scsi0"
     discard      = "ignore"
     size         = var.vm_disk_size

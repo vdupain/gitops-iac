@@ -59,6 +59,17 @@ fi
 
 ### Initialisation du projet Terraform
 
+Adapter la configuration à son environnement (PVE, credentials, etc...)
+
+```sh
+cp provider.auto.tfvars.template provider.auto.tfvars
+vi  provider.auto.tfvars
+
+cp variables.auto.tfvars.template variables.auto.tfvars.template
+vi  variables.auto.tfvars
+```sh
+
+
 ```sh
 terraform init
 ```
