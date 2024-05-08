@@ -5,6 +5,7 @@
 ```sh
 terraform apply -auto-approve
 terraform output -raw kubeconfig > kubeconfig-talos-cluster
+terraform output -raw talosconfig > talosconfig-talos-cluster
 
 k9s --kubeconfig kubeconfig-talos-cluster
 ```
