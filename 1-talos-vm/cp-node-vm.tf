@@ -1,7 +1,7 @@
 resource "proxmox_virtual_environment_vm" "talos-controle-plane" {
   count     = var.vm_cp_count
   name      = "talos-cp-${count.index}"
-  node_name = var.pve_target_node
+  node_name = "pve0"
   vm_id     = sum([1100, count.index])
 
   started = true
@@ -25,7 +25,7 @@ resource "proxmox_virtual_environment_vm" "talos-controle-plane" {
   disk {
     datastore_id = var.vm_datastore_id
     #file_id      = "local:iso/nocloud-amd64-v1.7.1.img"
-    file_id      = proxmox_virtual_environment_download_file.talos_cloud_image.id
+    file_id      = proxmox_virtual_environment_download_file.talos_cloud_image_pve0.id
     interface    = "scsi0"
     discard      = "ignore"
     size         = var.vm_disk_size

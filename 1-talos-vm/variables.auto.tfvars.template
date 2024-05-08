@@ -9,5 +9,5 @@ vm_name                = "test"
 vm_hostname            = "test"
 vm_socket_number       = 1
 vm_datastore_id        = "local-lvm"
-vm_cp_count            = 2
-vm_worker_count        = 3
+vm_cp_count            = 1
+vm_worker_count        = 1

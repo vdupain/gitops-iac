@@ -1,7 +1,7 @@
 resource "proxmox_virtual_environment_vm" "talos-worker" {
   count     = var.vm_worker_count
   name      = "talos-worker-${count.index}"
-  node_name = var.pve_target_node
+  node_name = "pve1"
   vm_id     = sum([1110, count.index])
 
   started = true
@@ -13,13 +13,13 @@ resource "proxmox_virtual_environment_vm" "talos-worker" {
 
   cpu {
     type    = var.vm_cpu_type
-    cores   = var.vm_cpu_cores_number
+    cores   = 4
     sockets = var.vm_socket_number
     flags   = []
   }
 
   memory {
-    dedicated = var.vm_memory_max
+    dedicated = 16384
   }
 
   disk {
@@ -28,7 +28,7 @@ resource "proxmox_virtual_environment_vm" "talos-worker" {
     file_id      = proxmox_virtual_environment_download_file.talos_cloud_image.id
     interface    = "scsi0"
     discard      = "ignore"
-    size         = var.vm_disk_size
+    size         = 50
     file_format  = "raw"
   }
 
