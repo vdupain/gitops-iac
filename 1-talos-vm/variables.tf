@@ -7,6 +7,9 @@ variable "pve_api_token" {
 variable "pve_api_user" {
   type = string
 }
+variable "pve_nodes" {
+  type = list(string)
+}
 variable "pve_target_node" {
   type = string
 }
