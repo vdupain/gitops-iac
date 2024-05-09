@@ -1,21 +1,22 @@
-resource "proxmox_virtual_environment_vm" "talos-worker" {
+resource "proxmox_virtual_environment_vm" "k8s-worker" {
   count     = var.vm_worker_count
-  name      = "talos-worker-${count.index}"
+  name      = "k8s-worker-${count.index}"
   node_name = "pve1"
-  vm_id     = sum([1110, count.index])
+  vm_id     = sum([2010, count.index])
+  description = "Managed by Terraform"
+  tags        = ["terraform", "talos", "k8s-worker"]
 
   started = true
-  on_boot = false
+  on_boot = true
   
   agent {
     enabled = false
   }
 
   cpu {
-    type    = var.vm_cpu_type
-    cores   = 4
-    sockets = var.vm_socket_number
-    flags   = []
+    type    = "host"
+    cores   = 6
+    sockets = 1
   }
 
   memory {
@@ -24,18 +25,19 @@ resource "proxmox_virtual_environment_vm" "talos-worker" {
 
   disk {
     datastore_id = var.vm_datastore_id
-    #file_id      = "local:iso/nocloud-amd64-v1.7.1.img"
-    file_id      = proxmox_virtual_environment_download_file.talos_cloud_image.id
+    file_id      = "local:iso/nocloud-amd64-v1.7.1.img"
+    #file_id      = proxmox_virtual_environment_download_file.talos_cloud_image.id
     interface    = "scsi0"
     discard      = "ignore"
-    size         = 50
+    size         = 30
     file_format  = "raw"
   }
 
   network_device {
-    bridge = "vmbr0"
+    bridge    = "vmbr0"
+    #vlan_id   = 44
   }
-
+  
   machine =  "q35"
 
   operating_system {

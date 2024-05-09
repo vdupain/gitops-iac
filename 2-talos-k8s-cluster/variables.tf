@@ -24,14 +24,26 @@ variable "node_data" {
     controlplanes = {
       "192.168.10.240" = {
         install_disk = "/dev/sda"
+        hostname     = "cp-0"
+      },
+      "192.168.10.241" = {
+        install_disk = "/dev/sda"
         hostname     = "cp-1"
+      },
+      "192.168.10.242" = {
+        install_disk = "/dev/sda"
+        hostname     = "cp-2"
       }
     }
     workers = {
       "192.168.10.230" = {
         install_disk = "/dev/sda"
+        hostname     = "worker-0"
+      }/*,
+      "192.168.10.231" = {
+        install_disk = "/dev/sda"
         hostname     = "worker-1"
-      }
+      }*/
     }
   }
 }
