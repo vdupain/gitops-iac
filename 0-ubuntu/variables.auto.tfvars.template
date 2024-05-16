@@ -1,5 +1,6 @@
-pve_target_node        = "pve1"
-vm_count               = 2
+pve_nodes              = ["pve0", "pve1", "pve2"]
+pve_target_node        = "pve0"
+vm_count               = 3
 vm_cpu_cores_number    = 1
 vm_cpu_type            = "x86-64-v2-AES"
 vm_disk_size           = 10
@@ -10,3 +11,4 @@ vm_name                = "test"
 vm_hostname            = "test"
 vm_socket_number       = 1
 vm_datastore_id        = "local-lvm"
+vm_ip_offset           = 48

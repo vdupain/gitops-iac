@@ -1,18 +1,20 @@
 resource "proxmox_virtual_environment_file" "cloud_user_config" {
+  count        = length(var.pve_nodes) 
   content_type = "snippets"
   datastore_id = "local"
-  node_name    = var.pve_target_node
+  node_name    = var.pve_nodes[count.index]
 
   source_raw {
     data = file("cloud-init/user_data")
-    file_name = "${var.vm_hostname}-user.yml"
+    file_name = "ubuntu-user.yml"
   }
 }
 
 resource "proxmox_virtual_environment_file" "cloud_meta_config" {
+  count        = length(var.pve_nodes) 
   content_type = "snippets"
   datastore_id = "local"
-  node_name    = var.pve_target_node
+  node_name    = var.pve_nodes[count.index]
 
   source_raw {
     data = templatefile("cloud-init/meta_data",
@@ -21,6 +23,6 @@ resource "proxmox_virtual_environment_file" "cloud_meta_config" {
         local_hostname = var.vm_hostname
       }
     )
-    file_name = "${var.vm_hostname}-meta_data.yml"
+    file_name = "ubuntu-meta_data.yml"
   }
 }

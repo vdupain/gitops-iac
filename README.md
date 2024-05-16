@@ -47,13 +47,13 @@ ssh-add -l
 ```
 
 A ajouter dans son .bashrc/.zshrc/...
+
 ```sh
 if [ -z "$SSH_AUTH_SOCK" ] ; then
  eval `ssh-agent -s`
  ssh-add ~/.ssh/id_ed25519
 fi
 ```
-
 
 ## Provisionning des VMs
 
@@ -67,8 +67,7 @@ vi  provider.auto.tfvars
 
 cp variables.auto.tfvars.template variables.auto.tfvars.template
 vi  variables.auto.tfvars
-```sh
-
+```
 
 ```sh
 terraform init
