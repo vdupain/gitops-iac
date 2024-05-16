@@ -1,7 +1,9 @@
 resource "proxmox_virtual_environment_vm" "k8s-worker" {
+    depends_on = [proxmox_virtual_environment_download_file.talos_cloud_image]
+
   count     = var.vm_count_k8s_worker
   name      = "k8s-worker-${count.index}"
-  node_name = "pved${sum([1, count.index])}"
+  node_name = "pve${sum([0, count.index])}"
   vm_id     = sum([var.vm_first_vm_id_k8s_cluster, count.index + var.vm_count_k8s_cp])
   description = "Managed by Terraform"
   tags        = ["terraform", "talos", "k8s-worker"]
@@ -34,7 +36,7 @@ resource "proxmox_virtual_environment_vm" "k8s-worker" {
 
   network_device {
     bridge    = "vmbr0"
-    vlan_id   = var.net_vlan_devops
+    #vlan_id   = var.net_vlan
   }
 
   machine =  "q35"
@@ -46,8 +48,8 @@ resource "proxmox_virtual_environment_vm" "k8s-worker" {
   initialization {
      ip_config {
        ipv4 {
-          address = join("/", [cidrhost(var.net_cidr_devops, count.index + var.vm_ip_offset_k8s_cluster + var.vm_count_k8s_cp), var.net_cidr_prefix_devops ])
-          gateway = var.net_gateway_devops
+          address = join("/", [cidrhost(var.net_cidr, count.index + var.vm_ip_offset_k8s_cluster + var.vm_count_k8s_cp), var.net_cidr_prefix ])
+          gateway = var.net_gateway
        }
      }
 

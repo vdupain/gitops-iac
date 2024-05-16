@@ -25,7 +25,7 @@ variable "net_cidr" {
     type = string
     default = "192.168.10.1/24"
 }
-variable "net_cidr_prefix_" {
+variable "net_cidr_prefix" {
     type = number
     default = 24
 }
