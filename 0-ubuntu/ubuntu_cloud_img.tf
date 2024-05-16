@@ -1,9 +1,10 @@
 resource "proxmox_virtual_environment_download_file" "ubuntu_cloud_image" {
-  content_type = "iso"
-  datastore_id = "local"
-  node_name    = var.pve_target_node
-  overwrite = false
+  count                     = length(var.pve_nodes) 
+  content_type              = "iso"
+  datastore_id              = "local"
+  node_name                 = var.pve_nodes[count.index]
+  overwrite                 = false
   url = "https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img"
-  checksum = "da76b0ef1cd45939f0d14ca11dd4dfabbe13b94d2ec144d54c805d1baf852e67"
-  checksum_algorithm = "sha256"
+  checksum = "1718f177dde4c461148ab7dcbdcf2f410c1f5daa694567f6a8bbb239d864b525"
+  checksum_algorithm        = "sha256"
 }
