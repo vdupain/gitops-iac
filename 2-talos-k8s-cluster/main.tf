@@ -27,7 +27,7 @@ resource "talos_machine_configuration_apply" "controlplane" {
   for_each                    = var.node_data.controlplanes
   node                        = each.key
   config_patches = [
-    templatefile("${path.module}/templates/install-disk-and-hostname.yaml.tmpl", {
+    templatefile("${path.module}/templates/machine.yaml.tmpl", {
       hostname     = each.value.hostname == null ? format("%s-cp-%s", var.cluster_name, index(keys(var.node_data.controlplanes), each.key)) : each.value.hostname
       install_disk = each.value.install_disk
     }),
@@ -41,7 +41,7 @@ resource "talos_machine_configuration_apply" "worker" {
   for_each                    = var.node_data.workers
   node                        = each.key
   config_patches = [
-    templatefile("${path.module}/templates/install-disk-and-hostname.yaml.tmpl", {
+    templatefile("${path.module}/templates/machine.yaml.tmpl", {
       hostname     = each.value.hostname == null ? format("%s-worker-%s", var.cluster_name, index(keys(var.node_data.workers), each.key)) : each.value.hostname
       install_disk = each.value.install_disk
     })

@@ -40,15 +40,6 @@ talosctl bootstrap
 talosctl kubeconfig .
 ```
 
-## Bootstrap FluxCD
-
-```sh
-export GITHUB_TOKEN=<gh-token>
-flux bootstrap github  --owner=vdupain --repository=gitops --branch=main \
-    --personal --path=clusters/talos-proxmox-cluster \
-    --kubeconfig kubeconfig-talos-cluster
-```
-
 ## Docs
 
 * <https://www.talos.dev/v1.7/talos-guides/install/virtualized-platforms/proxmox/>
