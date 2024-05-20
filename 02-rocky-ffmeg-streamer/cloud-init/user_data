@@ -1,0 +1,20 @@
+#cloud-config
+users:
+  - default
+  - rocky
+ssh_authorized_keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGC+C79emTtE46iSqxTzqjGNeH8Tu3A6+5jh0WiFL5RC vincent.dupain@protonmail.com
+runcmd:
+  - dnf install alsa-utils -y
+  - dnf install epel-release -y
+  - dnf config-manager --set-enabled crb -y
+  - dnf install --nogpgcheck https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-$(rpm -E %rhel).noarch.rpm -y
+  - dnf install --nogpgcheck https://mirrors.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-$(rpm -E %rhel).noarch.rpm -y
+  - dnf install ffmpeg ffmpeg-devel -y
+
+final_message: |
+   cloud-init done
+   Version: $version
+   Timestamp: $timestamp
+   Datasource: $datasource
+   Uptime: $uptime
