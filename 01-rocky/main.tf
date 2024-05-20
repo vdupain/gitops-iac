@@ -4,7 +4,7 @@ resource "proxmox_virtual_environment_vm" "rocky_vm" {
   count     = var.vm_count
   name      = "${var.vm_name}-${count.index}"
   node_name = "pve${(count.index % 3)}"
-  vm_id     = sum([1100, count.index])
+  vm_id     = sum([var.vm_id, count.index])
   description = "Managed by Terraform"
   tags        = ["terraform", "rocky"]
 
