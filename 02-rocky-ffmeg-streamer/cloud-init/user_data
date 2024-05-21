@@ -4,6 +4,25 @@ users:
   - rocky
 ssh_authorized_keys:
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGC+C79emTtE46iSqxTzqjGNeH8Tu3A6+5jh0WiFL5RC vincent.dupain@protonmail.com
+
+write_files:
+- content: |
+    [Unit]
+    Description=FFmpeg Streaming Service
+    After=network.target
+
+    [Service]
+    Type=simple
+    Restart=always
+    RestartSec=1
+    ExecStart=ffmpeg  -f alsa -channels 2 -sample_rate 44100 -i default:CARD=CODEC -ac 2 -c:a aac -q:a 2 -f rtsp rtsp://mediamtx:8554/stream
+
+    [Install]
+    WantedBy=multi-user.target
+  path: /etc/systemd/system/ffmeg.service
+  owner: root:root
+  permissions: '0644'
+
 runcmd:
   - dnf install alsa-utils -y
   - dnf install epel-release -y
@@ -11,6 +30,9 @@ runcmd:
   - dnf install --nogpgcheck https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-$(rpm -E %rhel).noarch.rpm -y
   - dnf install --nogpgcheck https://mirrors.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-$(rpm -E %rhel).noarch.rpm -y
   - dnf install ffmpeg ffmpeg-devel -y
+  - systemctl daemon-reload
+  - systemctl enable ffmeg
+  - systemctl start ffmeg
 
 final_message: |
    cloud-init done
