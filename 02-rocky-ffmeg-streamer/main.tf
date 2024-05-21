@@ -13,7 +13,7 @@ resource "proxmox_virtual_environment_vm" "rocky_vm" {
   on_boot = false
   
   agent {
-    enabled = false
+    enabled = true
   }
 
   cpu {
@@ -48,7 +48,6 @@ resource "proxmox_virtual_environment_vm" "rocky_vm" {
 
   usb {
      host = "08bb:29c0"
-     #host = ""
      #mapping = "usb_audio_codec"
      usb3 = false
    }
