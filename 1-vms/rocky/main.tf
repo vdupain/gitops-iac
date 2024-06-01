@@ -1,9 +1,8 @@
 resource "proxmox_virtual_environment_vm" "rocky_vm" {
-  depends_on = [proxmox_virtual_environment_download_file.rocky_cloud_image,proxmox_virtual_environment_file.cloud_user_config, proxmox_virtual_environment_file.cloud_meta_config]
 
   count     = var.vm_count
   name      = "${var.vm_name}-${count.index}"
-  node_name = "pve${(count.index % 3)}"
+  node_name = var.pve_nodes[count.index]
   vm_id     = sum([var.vm_id, count.index])
   description = "Managed by Terraform"
   tags        = ["terraform", "rocky"]
@@ -12,7 +11,7 @@ resource "proxmox_virtual_environment_vm" "rocky_vm" {
   on_boot = false
   
   agent {
-    enabled = false
+    enabled = true
   }
 
   cpu {
@@ -36,7 +35,6 @@ resource "proxmox_virtual_environment_vm" "rocky_vm" {
 
   network_device {
     bridge = "vmbr0"
-    #vlan_id   = var.net_vlan
   }
 
   machine =  "q35"

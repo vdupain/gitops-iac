@@ -4,14 +4,7 @@ users:
   - rocky
 ssh_authorized_keys:
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGC+C79emTtE46iSqxTzqjGNeH8Tu3A6+5jh0WiFL5RC vincent.dupain@protonmail.com
-      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIITkrmMxpaWz+2KNfvjCQ3IoFrYsqoNYnapZ2LZVEu13 v.dupain@oodrive.com
-# runcmd:
-#     - apt update
-#     - apt install -y qemu-guest-agent net-tools
-#     - timedatectl set-timezone Europe/Paris
-#     - systemctl enable qemu-guest-agent
-#     - systemctl start qemu-guest-agent
-#     - echo "done" > /tmp/cloud-config.done
+
 final_message: |
    cloud-init done
    Version: $version
