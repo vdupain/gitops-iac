@@ -8,7 +8,7 @@ resource "proxmox_virtual_environment_vm" "rocky_ffmpeg_streamer_vm" {
   tags        = ["terraform", "rocky"]
 
   started = true
-  on_boot = false
+  on_boot = true
   
   agent {
     enabled = true
