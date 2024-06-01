@@ -1,11 +1,9 @@
-resource "proxmox_virtual_environment_vm" "rocky_vm" {
-  #depends_on = [proxmox_virtual_environment_file.cloud_user_config, proxmox_virtual_environment_file.cloud_meta_config]
+resource "proxmox_virtual_environment_vm" "rocky_ffmpeg_streamer_vm" {
 
   count     = var.vm_count
   name      = "${var.vm_hostname}-${count.index}"
-  #node_name = "pve${(count.index % 3)}"
   node_name = var.pve_target_node
-  vm_id     = sum([var.vm_id, count.index])
+  vm_id     = var.vm_id
   description = "Managed by Terraform"
   tags        = ["terraform", "rocky"]
 
@@ -37,7 +35,6 @@ resource "proxmox_virtual_environment_vm" "rocky_vm" {
 
   network_device {
     bridge = "vmbr0"
-    #vlan_id   = var.net_vlan
   }
 
   machine =  "q35"
@@ -66,8 +63,6 @@ resource "proxmox_virtual_environment_vm" "rocky_vm" {
 
     datastore_id         = var.vm_datastore_id
     interface            = "ide2"
-    #user_data_file_id    = "local:snippets/rocky-user.yml"
-    #meta_data_file_id    = "local:snippets/rocky-meta_data.yml"
     user_data_file_id    = proxmox_virtual_environment_file.cloud_user_config.id
     meta_data_file_id    = proxmox_virtual_environment_file.cloud_meta_config.id
   }

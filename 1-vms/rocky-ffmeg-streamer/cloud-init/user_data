@@ -15,7 +15,7 @@ write_files:
     Type=simple
     Restart=always
     RestartSec=1
-    ExecStart=ffmpeg  -f alsa -channels 2 -sample_rate 44100 -i default:CARD=CODEC -ac 2 -c:a aac -q:a 2 -f rtsp rtsp://mediamtx:8554/stream
+    ExecStart=ffmpeg -f alsa -channels 2 -sample_rate 44100 -i default:CARD=CODEC -ac 2 -c:a aac -q:a 2 -f rtsp rtsp://mediamtx:8554/stream
 
     [Install]
     WantedBy=multi-user.target
@@ -24,13 +24,13 @@ write_files:
   permissions: '0644'
 
 runcmd:
+  - dnf install -y epel-release
+  - /usr/bin/crb enable
+  - dnf install -y --nogpgcheck https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-$(rpm -E %rhel).noarch.rpm
+  - dnf install -y --nogpgcheck https://mirrors.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-$(rpm -E %rhel).noarch.rpm
+  - dnf makecache
+  - dnf install -y ffmpeg ffmpeg-devel
   - dnf install alsa-utils -y
-  - dnf install epel-release -y
-  - dnf config-manager --set-enabled crb -y
-  - dnf install --nogpgcheck https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-$(rpm -E %rhel).noarch.rpm -y
-  - dnf install --nogpgcheck https://mirrors.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-$(rpm -E %rhel).noarch.rpm -y
-  - dnf install ffmpeg ffmpeg-devel -y
-  - systemctl daemon-reload
   - systemctl enable ffmeg
   - systemctl start ffmeg
 

@@ -9,9 +9,9 @@ terraform {
 
 provider "proxmox" {
   endpoint  = var.pve_endpoint
+  # using PROXMOX_VE_USERNAME instead of api token
+  # https://github.com/Telmate/terraform-provider-proxmox/issues/764
   #api_token = var.pve_api_token
-  username = "root@pam"
-  password = "vince"
   insecure  = true
   tmp_dir  = "/tmp"
   ssh {
