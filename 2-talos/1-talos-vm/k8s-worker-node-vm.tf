@@ -1,9 +1,8 @@
 resource "proxmox_virtual_environment_vm" "k8s-worker" {
-    depends_on = [proxmox_virtual_environment_download_file.talos_cloud_image]
 
   count     = var.vm_count_k8s_worker
   name      = "k8s-worker-${count.index}"
-  node_name = "pve${sum([0, count.index])}"
+  node_name = var.pve_nodes[count.index]
   vm_id     = sum([var.vm_first_vm_id_k8s_cluster, count.index + var.vm_count_k8s_cp])
   description = "Managed by Terraform"
   tags        = ["terraform", "talos", "k8s-worker"]
@@ -36,7 +35,6 @@ resource "proxmox_virtual_environment_vm" "k8s-worker" {
 
   network_device {
     bridge    = "vmbr0"
-    #vlan_id   = var.net_vlan
   }
 
   machine =  "q35"

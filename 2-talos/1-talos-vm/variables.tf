@@ -49,11 +49,19 @@ variable "vm_count_k8s_worker" {
     type = number
     default = 3
 }
+variable "vm_count_k8s_worker_gpu" {
+    type = number
+    default = 1
+}
 variable "vm_cpu_type_k8s_cp" {
     type = string
     default = "host"
 }
 variable "vm_cpu_type_k8s_worker" {
+    type = string
+    default = "host"
+}
+variable "vm_cpu_type_k8s_worker_gpu" {
     type = string
     default = "host"
 }
@@ -65,11 +73,19 @@ variable "vm_cpu_cores_number_k8s_worker" {
     type = number
     default = 2
 }
+variable "vm_cpu_cores_number_k8s_worker_gpu" {
+    type = number
+    default = 8
+}
 variable "vm_socket_number_k8s_cp" {
     type = number
     default = 1
 }
 variable "vm_socket_number_k8s_worker" {
+    type = number
+    default = 1
+}
+variable "vm_socket_number_k8s_worker_gpu" {
     type = number
     default = 1
 }
@@ -81,6 +97,10 @@ variable "vm_memory_k8s_worker" {
     type = number
     default = 2048
 }
+variable "vm_memory_k8s_worker_gpu" {
+    type = number
+    default = 16384
+}
 variable "vm_disk_size_k8s_cp" {
     type = number
     default = 30
@@ -89,11 +109,19 @@ variable "vm_disk_size_k8s_worker" {
     type = number
     default = 30
 }
+variable "vm_disk_size_k8s_worker_gpu" {
+    type = number
+    default = 30
+}
 variable "vm_datastore_id_k8s_cp" {
     type = string
     default = "local-lvm"
 }
 variable "vm_datastore_id_k8s_worker" {
+    type = string
+    default = "local-lvm"
+}
+variable "vm_datastore_id_k8s_worker_gpu" {
     type = string
     default = "local-lvm"
 }

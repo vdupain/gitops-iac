@@ -49,6 +49,10 @@ variable "node_data" {
       "192.168.10.225" = {
         install_disk = "/dev/sda"
         hostname     = "worker-2"
+      },
+      "192.168.10.226" = {
+        install_disk = "/dev/sda"
+        hostname     = "worker-gpu"
       }
     }
   }

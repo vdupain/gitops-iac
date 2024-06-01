@@ -1,9 +1,8 @@
 resource "proxmox_virtual_environment_vm" "k8s-control-plane" {
-    depends_on = [proxmox_virtual_environment_download_file.talos_cloud_image]
-
+  
   count     = var.vm_count_k8s_cp
   name      = "k8s-cp-${count.index}"
-  node_name = "pve${sum([0, count.index])}"
+  node_name = var.pve_nodes[count.index]
 
   vm_id     = sum([var.vm_first_vm_id_k8s_cluster, count.index])
   description = "Managed by Terraform"
@@ -37,7 +36,6 @@ resource "proxmox_virtual_environment_vm" "k8s-control-plane" {
 
   network_device {
     bridge    = "vmbr0"
-    #vlan_id   = var.net_vlan
   }
 
   machine =  "q35"
