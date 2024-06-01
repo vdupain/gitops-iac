@@ -1,9 +1,8 @@
 resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
-  depends_on = [proxmox_virtual_environment_download_file.ubuntu_cloud_image,proxmox_virtual_environment_file.cloud_user_config, proxmox_virtual_environment_file.cloud_meta_config]
 
   count     = var.vm_count
   name      = "${var.vm_name}-${count.index}"
-  node_name = "pve${(count.index % 3)}"
+  node_name = var.pve_nodes[count.index]
   vm_id     = sum([1000, count.index])
   description = "Managed by Terraform"
   tags        = ["terraform", "ubuntu"]
@@ -12,7 +11,7 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   on_boot = false
   
   agent {
-    enabled = false
+    enabled = true
   }
 
   cpu {
@@ -27,7 +26,7 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 
   disk {
     datastore_id = var.vm_datastore_id
-    file_id      = "local:iso/jammy-server-cloudimg-amd64.img"
+    file_id      = "local:iso/noble-server-cloudimg-amd64.img"
     interface    = "scsi0"
     discard      = "ignore"
     size         = var.vm_disk_size
