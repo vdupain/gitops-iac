@@ -21,6 +21,9 @@ variable "node_data" {
       install_disk = string
       hostname     = optional(string)
     }))
+    workers_gpu = map(object({
+      gpu     = optional(string)
+    }))
   })
   default = {
     controlplanes = {
@@ -53,6 +56,11 @@ variable "node_data" {
       "192.168.10.226" = {
         install_disk = "/dev/sda"
         hostname     = "worker-gpu"
+      }
+    }
+    workers_gpu = {
+      "192.168.10.226" = {
+        gpu = "nvidia"
       }
     }
   }

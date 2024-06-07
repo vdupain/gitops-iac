@@ -48,6 +48,18 @@ resource "talos_machine_configuration_apply" "worker" {
   ]
 }
 
+resource "talos_machine_configuration_apply" "worker-gpu" {
+  depends_on = [talos_machine_configuration_apply.worker]
+
+  client_configuration        = talos_machine_secrets.this.client_configuration
+  machine_configuration_input = data.talos_machine_configuration.worker.machine_configuration
+  for_each                    = var.node_data.workers_gpu
+  node                        = each.key
+  config_patches = [
+    file("${path.module}/files/gpu-worker-patch.yaml")
+  ]
+}
+
 resource "talos_machine_bootstrap" "this" {
   depends_on = [talos_machine_configuration_apply.controlplane]
 
