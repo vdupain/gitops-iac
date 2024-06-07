@@ -111,7 +111,7 @@ variable "vm_disk_size_k8s_worker" {
 }
 variable "vm_disk_size_k8s_worker_gpu" {
     type = number
-    default = 30
+    default = 50
 }
 variable "vm_datastore_id_k8s_cp" {
     type = string

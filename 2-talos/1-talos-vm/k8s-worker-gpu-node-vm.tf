@@ -8,7 +8,7 @@ resource "proxmox_virtual_environment_vm" "k8s-worker-gpu" {
   tags        = ["terraform", "talos", "k8s-worker-gpu"]
 
   started = true
-  on_boot = true
+  on_boot = false
   
   agent {
     enabled = false
@@ -42,6 +42,14 @@ resource "proxmox_virtual_environment_vm" "k8s-worker-gpu" {
   operating_system {
     type = "l26"
   }
+
+  hostpci {
+      device   = "hostpci0"
+      mapping  = "nvidia_3060"
+      pcie     = true
+      rombar   = true
+      xvga     = false
+    }
 
   initialization {
      ip_config {
