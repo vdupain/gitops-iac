@@ -24,13 +24,17 @@ docker run --rm -t -v $PWD/_out:/out -v /dev:/dev --privileged ghcr.io/siderolab
     --extra-kernel-arg net.ifnames=0 --extra-kernel-arg=-console --extra-kernel-arg=console=ttyS1 --arch=amd64
 ```
 
+## Talos Linux Image Factory
+
+Au lieu de contruire son image, il est possible d'utiliser <https://factory.talos.dev/> qui permet de générer des images avec des extensions
+
 ```sh
 export CONTROL_PLANE_IP=192.168.10.220
 export GPU_WORKER_IP=192.168.10.226
 export TALOSCONFIG="talosconfig-talos-cluster"
 talosctl config endpoint $CONTROL_PLANE_IP
 talosctl config node $GPU_WORKER_IP
-#talosctl patch mc --patch @files/gpu-worker-patch.yaml
+talosctl patch mc --patch @files/gpu-worker-patch.yaml
 talosctl read /proc/modules
 talosctl get extensions
 talosctl read /proc/driver/nvidia/version

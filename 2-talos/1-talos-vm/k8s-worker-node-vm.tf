@@ -11,7 +11,7 @@ resource "proxmox_virtual_environment_vm" "k8s-worker" {
   on_boot = true
   
   agent {
-    enabled = false
+    enabled = true
   }
 
   cpu {
@@ -26,7 +26,7 @@ resource "proxmox_virtual_environment_vm" "k8s-worker" {
 
   disk {
     datastore_id = var.vm_datastore_id_k8s_worker
-    file_id      = "local:iso/nocloud-amd64-v1.7.4.img"
+    file_id      = "truenas:iso/nocloud-amd64-v1.7.4.img"
     interface    = "scsi0"
     discard      = "ignore"
     size         = var.vm_disk_size_k8s_worker
