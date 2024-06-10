@@ -56,7 +56,8 @@ resource "talos_machine_configuration_apply" "worker-gpu" {
   for_each                    = var.node_data.workers_gpu
   node                        = each.key
   config_patches = [
-    file("${path.module}/files/gpu-worker-patch.yaml")
+    file("${path.module}/files/gpu-worker-patch.yaml"),
+    file("${path.module}/files/nvidia-default-runtimeclass.yaml"),
   ]
 }
 

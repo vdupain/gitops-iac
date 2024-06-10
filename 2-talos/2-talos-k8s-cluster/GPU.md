@@ -34,4 +34,5 @@ talosctl config node $GPU_WORKER_IP
 talosctl read /proc/modules
 talosctl get extensions
 talosctl read /proc/driver/nvidia/version
+talosctl patch mc --patch @files/nvidia-default-runtimeclass.yaml
 ```
