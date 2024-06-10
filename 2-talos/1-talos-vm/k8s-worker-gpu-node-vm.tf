@@ -26,7 +26,7 @@ resource "proxmox_virtual_environment_vm" "k8s-worker-gpu" {
 
   disk {
     datastore_id = var.vm_datastore_id_k8s_worker_gpu
-    file_id      = "local:iso/nocloud-nvidia-nonfree-amd64.img"
+    file_id      = "local:iso/nocloud-amd64-nvidia-v1.7.4.img"
     interface    = "scsi0"
     discard      = "ignore"
     size         = var.vm_disk_size_k8s_worker_gpu
