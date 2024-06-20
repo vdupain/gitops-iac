@@ -44,8 +44,8 @@ resource "proxmox_virtual_environment_vm" "rocky_ffmpeg_streamer_vm" {
   }
 
   usb {
-     host = "08bb:29c0"
-     #mapping = "usb_audio_codec"
+     #host = "08bb:29c0"
+     mapping = "usb_audio_codec"
      usb3 = false
    }
 

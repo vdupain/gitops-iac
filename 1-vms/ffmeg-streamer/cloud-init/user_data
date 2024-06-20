@@ -4,6 +4,7 @@ users:
   - rocky
 ssh_authorized_keys:
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGC+C79emTtE46iSqxTzqjGNeH8Tu3A6+5jh0WiFL5RC vincent.dupain@protonmail.com
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILFYw8Jz++BFUmu1eCvIxKNDVN3IDTGvvceNe/mE9nXs vincent.dupain@protonmail.com
 
 write_files:
 - content: |
