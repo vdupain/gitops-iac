@@ -10,7 +10,6 @@ users:
     sudo: ALL=(ALL) NOPASSWD:ALL
     ssh_authorized_keys:
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGC+C79emTtE46iSqxTzqjGNeH8Tu3A6+5jh0WiFL5RC vincent.dupain@protonmail.com
-      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIITkrmMxpaWz+2KNfvjCQ3IoFrYsqoNYnapZ2LZVEu13 v.dupain@oodrive.com
 #ssh_pwauth: True ## This line enables ssh password authentication
 runcmd:
   - apt update
