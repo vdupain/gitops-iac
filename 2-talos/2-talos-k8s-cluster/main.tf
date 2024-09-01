@@ -33,6 +33,7 @@ resource "talos_machine_configuration_apply" "controlplane" {
     }),
     file("${path.module}/files/cp-scheduling.yaml"),
     file("${path.module}/files/falco-patch.yaml"),
+    file("${path.module}/files/cilium.yaml"),
   ]
 }
 
