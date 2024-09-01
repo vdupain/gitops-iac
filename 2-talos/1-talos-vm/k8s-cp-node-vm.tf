@@ -12,7 +12,7 @@ resource "proxmox_virtual_environment_vm" "k8s-control-plane" {
   on_boot = true
   
   agent {
-    enabled = true
+    enabled = false
   }
 
   cpu {
@@ -27,7 +27,7 @@ resource "proxmox_virtual_environment_vm" "k8s-control-plane" {
 
   disk {
     datastore_id = var.vm_datastore_id_k8s_cp
-    file_id      = "truenas:iso/nocloud-amd64-v1.7.4.img"
+    file_id      = proxmox_virtual_environment_download_file.talos_cloud_image.id
     interface    = "scsi0"
     discard      = "ignore"
     size         = var.vm_disk_size_k8s_cp
