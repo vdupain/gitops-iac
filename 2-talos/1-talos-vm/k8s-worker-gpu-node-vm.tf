@@ -11,7 +11,7 @@ resource "proxmox_virtual_environment_vm" "k8s-worker-gpu" {
   on_boot = false
   
   agent {
-    enabled = false
+    enabled = true
   }
 
   cpu {

@@ -11,7 +11,7 @@ resource "proxmox_virtual_environment_vm" "k8s-worker" {
   on_boot = true
   
   agent {
-    enabled = false
+    enabled = true
   }
 
   cpu {
