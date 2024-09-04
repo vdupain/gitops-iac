@@ -22,7 +22,7 @@ variable "node_data" {
       hostname     = optional(string)
     }))
     workers_gpu = map(object({
-      gpu     = optional(string)
+      gpu = optional(string)
     }))
   })
   default = {
