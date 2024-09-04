@@ -1,16 +1,16 @@
 resource "proxmox_virtual_environment_vm" "k8s-control-plane" {
-  
+
   count     = var.vm_count_k8s_cp
   name      = "k8s-cp-${count.index}"
   node_name = var.pve_nodes[count.index]
 
-  vm_id     = sum([var.vm_first_vm_id_k8s_cluster, count.index])
+  vm_id       = sum([var.vm_first_vm_id_k8s_cluster, count.index])
   description = "Managed by Terraform"
   tags        = ["terraform", "talos", "k8s-cp"]
 
   started = true
   on_boot = true
-  
+
   agent {
     enabled = true
   }
@@ -35,28 +35,28 @@ resource "proxmox_virtual_environment_vm" "k8s-control-plane" {
   }
 
   network_device {
-    bridge    = "vmbr0"
+    bridge = "vmbr0"
   }
 
-  machine =  "q35"
+  machine = "q35"
 
   operating_system {
     type = "l26"
   }
 
   initialization {
-     ip_config {
-       ipv4 {
-          address = join("/", [cidrhost(var.net_cidr, count.index + var.vm_ip_offset_k8s_cluster), var.net_cidr_prefix ])
-          gateway = var.net_gateway
-       }
-     }
+    ip_config {
+      ipv4 {
+        address = join("/", [cidrhost(var.net_cidr, count.index + var.vm_ip_offset_k8s_cluster), var.net_cidr_prefix])
+        gateway = var.net_gateway
+      }
+    }
 
     dns {
       servers = var.dns
-    }   
+    }
 
-    datastore_id         = var.vm_datastore_id_k8s_cp
-    interface            = "ide2"
+    datastore_id = var.vm_datastore_id_k8s_cp
+    interface    = "ide2"
   }
 }
