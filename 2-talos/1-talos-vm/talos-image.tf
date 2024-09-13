@@ -17,7 +17,9 @@ data "http" "schematic_id" {
 }
 
 resource "proxmox_virtual_environment_download_file" "this" {
-  node_name               = var.pve_target_node
+  for_each = toset(distinct([for v in var.vms : "${v.host_node}"]))
+
+  node_name               = each.key
   content_type            = "iso"
   datastore_id            = "local"
   decompression_algorithm = "gz"
