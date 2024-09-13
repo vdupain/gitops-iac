@@ -17,14 +17,14 @@ data "talos_machine_configuration" "worker" {
 data "talos_client_configuration" "this" {
   cluster_name         = var.cluster.name
   client_configuration = talos_machine_secrets.this.client_configuration
-  endpoints            = [for k, v in var.node_data.controlplanes : k]
-  nodes                = [for k, v in var.node_data.workers : k]
+  endpoints            = [for k, v in var.controlplanes : k]
+  nodes                = [for k, v in var.workers : k]
 }
 
 resource "talos_machine_configuration_apply" "controlplane" {
   client_configuration        = talos_machine_secrets.this.client_configuration
   machine_configuration_input = data.talos_machine_configuration.controlplane.machine_configuration
-  for_each                    = var.node_data.controlplanes
+  for_each                    = var.controlplanes
   node                        = each.key
   config_patches = [
     templatefile("${path.module}/config/control-plane.yaml.tmpl", {
@@ -40,8 +40,11 @@ resource "talos_machine_configuration_apply" "controlplane" {
 resource "talos_machine_configuration_apply" "worker" {
   client_configuration        = talos_machine_secrets.this.client_configuration
   machine_configuration_input = data.talos_machine_configuration.worker.machine_configuration
-  for_each                    = var.node_data.workers
-  node                        = each.key
+  for_each = {
+    for k, v in var.workers : k => v
+    if v.gpu == false
+  }
+  node = each.key
   config_patches = [
     templatefile("${path.module}/config/worker.yaml.tmpl", {
       hostname     = each.value.hostname
@@ -51,13 +54,18 @@ resource "talos_machine_configuration_apply" "worker" {
 }
 
 resource "talos_machine_configuration_apply" "worker-gpu" {
-  depends_on = [talos_machine_configuration_apply.worker]
-
   client_configuration        = talos_machine_secrets.this.client_configuration
-  machine_configuration_input = talos_machine_configuration_apply.worker[each.key].machine_configuration
-  for_each                    = var.node_data.workers_gpu
-  node                        = each.key
+  machine_configuration_input = data.talos_machine_configuration.worker.machine_configuration
+  for_each = {
+    for k, v in var.workers : k => v
+    if v.gpu == true
+  }
+  node = each.key
   config_patches = [
+    templatefile("${path.module}/config/worker.yaml.tmpl", {
+      hostname     = each.value.hostname
+      install_disk = each.value.install_disk
+    }),
     file("${path.module}/config/gpu-worker-patch.yaml"),
     file("${path.module}/config/nvidia-default-runtimeclass.yaml"),
   ]
@@ -67,11 +75,11 @@ resource "talos_machine_bootstrap" "this" {
   depends_on = [talos_machine_configuration_apply.controlplane]
 
   client_configuration = talos_machine_secrets.this.client_configuration
-  node                 = [for k, v in var.node_data.controlplanes : k][0]
+  node                 = [for k, v in var.controlplanes : k][0]
 }
 
 data "talos_cluster_kubeconfig" "this" {
   depends_on           = [talos_machine_bootstrap.this]
   client_configuration = talos_machine_secrets.this.client_configuration
-  node                 = [for k, v in var.node_data.controlplanes : k][0]
+  node                 = [for k, v in var.controlplanes : k][0]
 }
