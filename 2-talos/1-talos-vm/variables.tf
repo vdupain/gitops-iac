@@ -28,7 +28,3 @@ variable "vms" {
     gpu           = optional(bool, false)
   }))
 }
-
-variable "pve_target_node" {
-  type = string
-}
