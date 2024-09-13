@@ -1,21 +1,21 @@
 resource "talos_machine_secrets" "this" {}
 
 data "talos_machine_configuration" "controlplane" {
-  cluster_name     = var.cluster_name
-  cluster_endpoint = var.cluster_endpoint
+  cluster_name     = var.cluster.name
+  cluster_endpoint = "https://${var.cluster.endpoint}:6443"
   machine_type     = "controlplane"
   machine_secrets  = talos_machine_secrets.this.machine_secrets
 }
 
 data "talos_machine_configuration" "worker" {
-  cluster_name     = var.cluster_name
-  cluster_endpoint = var.cluster_endpoint
+  cluster_name     = var.cluster.name
+  cluster_endpoint = "https://${var.cluster.endpoint}:6443"
   machine_type     = "worker"
   machine_secrets  = talos_machine_secrets.this.machine_secrets
 }
 
 data "talos_client_configuration" "this" {
-  cluster_name         = var.cluster_name
+  cluster_name         = var.cluster.name
   client_configuration = talos_machine_secrets.this.client_configuration
   endpoints            = [for k, v in var.node_data.controlplanes : k]
   nodes                = [for k, v in var.node_data.workers : k]
@@ -27,13 +27,13 @@ resource "talos_machine_configuration_apply" "controlplane" {
   for_each                    = var.node_data.controlplanes
   node                        = each.key
   config_patches = [
-    templatefile("${path.module}/templates/machine.yaml.tmpl", {
-      hostname     = each.value.hostname == null ? format("%s-cp-%s", var.cluster_name, index(keys(var.node_data.controlplanes), each.key)) : each.value.hostname
-      install_disk = each.value.install_disk
+    templatefile("${path.module}/config/control-plane.yaml.tmpl", {
+      hostname       = each.value.hostname
+      install_disk   = each.value.install_disk
+      cilium_values  = file("${path.module}/kubernetes/cilium-values.yaml")
+      cilium_install = file("${path.module}/kubernetes/cilium-install.yaml")
     }),
-    file("${path.module}/files/cp-scheduling.yaml"),
-    file("${path.module}/files/falco-patch.yaml"),
-    file("${path.module}/files/cilium.yaml"),
+    file("${path.module}/config/falco-patch.yaml"),
   ]
 }
 
@@ -43,8 +43,8 @@ resource "talos_machine_configuration_apply" "worker" {
   for_each                    = var.node_data.workers
   node                        = each.key
   config_patches = [
-    templatefile("${path.module}/templates/machine.yaml.tmpl", {
-      hostname     = each.value.hostname == null ? format("%s-worker-%s", var.cluster_name, index(keys(var.node_data.workers), each.key)) : each.value.hostname
+    templatefile("${path.module}/config/worker.yaml.tmpl", {
+      hostname     = each.value.hostname
       install_disk = each.value.install_disk
     })
   ]
@@ -58,8 +58,8 @@ resource "talos_machine_configuration_apply" "worker-gpu" {
   for_each                    = var.node_data.workers_gpu
   node                        = each.key
   config_patches = [
-    file("${path.module}/files/gpu-worker-patch.yaml"),
-    file("${path.module}/files/nvidia-default-runtimeclass.yaml"),
+    file("${path.module}/config/gpu-worker-patch.yaml"),
+    file("${path.module}/config/nvidia-default-runtimeclass.yaml"),
   ]
 }
 

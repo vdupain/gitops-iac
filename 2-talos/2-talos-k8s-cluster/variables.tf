@@ -1,13 +1,9 @@
-variable "cluster_name" {
-  description = "A name to provide for the Talos cluster"
-  type        = string
-  default     = "talos-proxmox-cluster"
-}
-
-variable "cluster_endpoint" {
-  description = "The endpoint for the Talos cluster"
-  type        = string
-  default     = "https://192.168.10.220:6443"
+variable "cluster" {
+  description = "Cluster configuration"
+  type = object({
+    name     = string
+    endpoint = string
+  })
 }
 
 variable "node_data" {
