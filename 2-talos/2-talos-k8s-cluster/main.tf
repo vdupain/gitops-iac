@@ -17,15 +17,18 @@ data "talos_machine_configuration" "worker" {
 data "talos_client_configuration" "this" {
   cluster_name         = var.cluster.name
   client_configuration = talos_machine_secrets.this.client_configuration
-  endpoints            = [for k, v in var.controlplanes : k]
-  nodes                = [for k, v in var.workers : k]
+  endpoints            = [for k, v in var.nodes : k if v.machine_type == "controlplane"]
+  nodes                = [for k, v in var.nodes : k if v.machine_type == "worker"]
 }
 
 resource "talos_machine_configuration_apply" "controlplane" {
   client_configuration        = talos_machine_secrets.this.client_configuration
   machine_configuration_input = data.talos_machine_configuration.controlplane.machine_configuration
-  for_each                    = var.controlplanes
-  node                        = each.key
+  for_each = {
+    for k, v in var.nodes : k => v
+    if v.machine_type == "controlplane"
+  }
+  node = each.value.ip
   config_patches = [
     templatefile("${path.module}/config/control-plane.yaml.tmpl", {
       hostname       = each.value.hostname
@@ -41,10 +44,10 @@ resource "talos_machine_configuration_apply" "worker" {
   client_configuration        = talos_machine_secrets.this.client_configuration
   machine_configuration_input = data.talos_machine_configuration.worker.machine_configuration
   for_each = {
-    for k, v in var.workers : k => v
-    if v.gpu == false
+    for k, v in var.nodes : k => v
+    if v.machine_type == "worker" && v.gpu == false
   }
-  node = each.key
+  node = each.value.ip
   config_patches = [
     templatefile("${path.module}/config/worker.yaml.tmpl", {
       hostname     = each.value.hostname
@@ -57,10 +60,10 @@ resource "talos_machine_configuration_apply" "worker-gpu" {
   client_configuration        = talos_machine_secrets.this.client_configuration
   machine_configuration_input = data.talos_machine_configuration.worker.machine_configuration
   for_each = {
-    for k, v in var.workers : k => v
-    if v.gpu == true
+    for k, v in var.nodes : k => v
+    if v.machine_type == "worker" && v.gpu == true
   }
-  node = each.key
+  node = each.value.ip
   config_patches = [
     templatefile("${path.module}/config/worker.yaml.tmpl", {
       hostname     = each.value.hostname
@@ -75,11 +78,11 @@ resource "talos_machine_bootstrap" "this" {
   depends_on = [talos_machine_configuration_apply.controlplane]
 
   client_configuration = talos_machine_secrets.this.client_configuration
-  node                 = [for k, v in var.controlplanes : k][0]
+  node                 = [for k, v in var.nodes : v.ip if v.machine_type == "controlplane"][0]
 }
 
 data "talos_cluster_kubeconfig" "this" {
   depends_on           = [talos_machine_bootstrap.this]
   client_configuration = talos_machine_secrets.this.client_configuration
-  node                 = [for k, v in var.controlplanes : k][0]
+  node                 = [for k, v in var.nodes : v.ip if v.machine_type == "controlplane"][0]
 }
