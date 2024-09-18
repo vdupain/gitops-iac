@@ -40,7 +40,7 @@ resource "proxmox_virtual_environment_vm" "vms" {
     ssd          = true
     file_format  = "raw"
     size         = each.value.disk_size
-    file_id      = proxmox_virtual_environment_download_file.this[each.value.host_node].id
+    file_id      = proxmox_virtual_environment_download_file.this["${each.value.host_node}_${each.value.gpu == true ? local.image_nvidia_id : local.image_id}"].id
   }
 
   boot_order = ["scsi0"]
