@@ -7,10 +7,7 @@ variable "pve_api_token" {
 variable "pve_api_user" {
   type = string
 }
-variable "pve_nodes" {
-  type = list(string)
-}
-variable "pve_target_node" {
+variable "pve_node" {
   type = string
 }
 variable "vm_cpu_cores_number" {
@@ -37,37 +34,26 @@ variable "vm_memory_min" {
 variable "vm_name" {
   type = string
 }
-variable "vm_socket_number" {
-  type = number
-}
 variable "vm_hostname" {
   type = string
 }
-variable "vm_count" {
-    type = number
-    default = 1
-}
-variable "vm_ip_offset" {
-    type = number
+variable "vm_ip" {
+  type = number
 }
 variable "dns" {
-  type = list(string)
+  type    = list(string)
   default = ["192.168.10.4"]
 }
-variable "net_vlan" {
-    type = number
-    default = 43
-}
 variable "net_cidr" {
-    type = string
-    default = "192.168.10.0/24"
+  type    = string
+  default = "192.168.10.0/24"
 }
 variable "net_cidr_prefix" {
-    type = number
-    default = 24
+  type    = number
+  default = 24
 }
 variable "net_gateway" {
-    type = string
-    default = "192.168.10.1"
+  type    = string
+  default = "192.168.10.1"
 }
 

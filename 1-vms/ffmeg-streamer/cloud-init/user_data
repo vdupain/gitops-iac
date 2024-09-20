@@ -4,7 +4,7 @@ users:
   - rocky
 ssh_authorized_keys:
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGC+C79emTtE46iSqxTzqjGNeH8Tu3A6+5jh0WiFL5RC vincent.dupain@protonmail.com
-      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILFYw8Jz++BFUmu1eCvIxKNDVN3IDTGvvceNe/mE9nXs vincent.dupain@protonmail.com
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGyRLx6YuiLftvtcLQY6ZMq5OHUn1PAlQVY+z+8FXwXV vincent.dupain@protonmail.com
 
 write_files:
 - content: |
@@ -20,7 +20,7 @@ write_files:
 
     [Install]
     WantedBy=multi-user.target
-  path: /etc/systemd/system/ffmeg.service
+  path: /etc/systemd/system/ffmpeg.service
   owner: root:root
   permissions: '0644'
 
@@ -32,8 +32,8 @@ runcmd:
   - dnf makecache
   - dnf install -y ffmpeg ffmpeg-devel
   - dnf install alsa-utils -y
-  - systemctl enable ffmeg
-  - systemctl start ffmeg
+  - systemctl enable ffmpeg
+  - systemctl start ffmpeg
 
 final_message: |
    cloud-init done

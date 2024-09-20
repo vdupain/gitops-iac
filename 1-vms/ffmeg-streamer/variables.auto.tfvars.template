@@ -1,6 +1,4 @@
-pve_nodes              = ["pve0", "pve1", "pve2"]
-pve_target_node        = "pve2"
-vm_count               = 1
+pve_node        = "pve1"
 vm_cpu_cores_number    = 1
 vm_cpu_type            = "host"
 vm_disk_size           = 20
@@ -9,6 +7,5 @@ vm_memory_max          = 1024
 vm_memory_min          = 1024
 vm_name                = "ffmeg-streamer"
 vm_hostname            = "ffmeg-streamer"
-vm_socket_number       = 1
 vm_datastore_id        = "local-lvm"
-vm_ip_offset           = 205
+vm_ip                  = 205
