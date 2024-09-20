@@ -1,5 +1,4 @@
 pve_nodes              = ["pve0", "pve1", "pve3"]
-pve_target_node        = "pve1"
 vm_count               = 3
 vm_cpu_cores_number    = 1
 vm_cpu_type            = "host"
