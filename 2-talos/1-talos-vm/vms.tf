@@ -56,6 +56,10 @@ resource "proxmox_virtual_environment_vm" "vms" {
         address = "${each.value.ip}/24"
         gateway = var.cluster.gateway
       }
+      ipv6 {
+        #address = "dhcp"
+        address = "${each.value.ipv6}/64"
+      }
     }
   }
 

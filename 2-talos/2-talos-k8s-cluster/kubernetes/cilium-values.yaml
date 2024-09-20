@@ -23,3 +23,12 @@ data:
       enabled: true
     externalIPs:
       enabled: true
+    ipv6:
+      enabled: true
+    hubble:
+      relay:
+        enabled: true
+      ui:
+        enabled: true
+      preferIpv6: true
+

@@ -1,7 +1,19 @@
 machine:
   install:
     disk: ${install_disk}
+  kubelet:
+    nodeIP:
+      validSubnets:
+          - 192.168.10.0/24
+          - 2a01:cb0c:81d1:a8fb::/64
   network:
+    interfaces:
+      - deviceSelector:
+          busPath: "0*"
+        dhcp: true
+        dhcpOptions:
+          ipv4: false
+          ipv6: true
     hostname: ${hostname}
 # https://www.talos.dev/v1.7/talos-guides/configuration/time-sync/#additional-configuration
   time:
@@ -13,6 +25,9 @@ cluster:
   network:
     cni:
       name: none
+    podSubnets:
+        - 10.244.0.0/16
+        - fd00:10:244::/56
   proxy:
     disabled: true
   inlineManifests:
