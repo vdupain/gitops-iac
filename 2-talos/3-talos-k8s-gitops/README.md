@@ -5,7 +5,7 @@
 ```sh
 export GITHUB_TOKEN=<gh-token>
 flux bootstrap github  --owner=vdupain --repository=gitops --branch=main \
-    --personal --path=clusters/talos-proxmox-cluster --token-auth \
+    --personal --path=clusters/talos-proxmox-cluster-ipv6 --token-auth \
     --kubeconfig ../2-talos-k8s-cluster/kubeconfig-talos-cluster
 ```
 

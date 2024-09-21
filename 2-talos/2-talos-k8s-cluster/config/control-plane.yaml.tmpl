@@ -4,8 +4,11 @@ machine:
   kubelet:
     nodeIP:
       validSubnets:
-          - 192.168.10.0/24
-          - 2a01:cb0c:81d1:a8fb::/64
+        - 2a01:cb0c:81d1:a8fb::/64
+        - fd31:e17c:f07f:1::/64 # primary ULA subnet
+        - 192.168.10.0/24
+  sysctls:
+    net.ipv6.conf.all.forwarding: 1
   network:
     interfaces:
       - deviceSelector:
@@ -22,12 +25,33 @@ machine:
 
 cluster:
   allowSchedulingOnControlPlanes: true
+  # listen on IPv6 interfaces
+  # TODO: set up firewall to deny non-local connections
+  apiServer:
+    extraArgs:
+      bind-address: "::"
+  controllerManager:
+    extraArgs:
+      bind-address: "::1"
+      node-cidr-mask-size-ipv6: "80" # defaults to /64 - whole assigned ULA subnet
+  scheduler:
+    extraArgs:
+      bind-address: "::1"
   network:
     cni:
       name: none
     podSubnets:
-        - 10.244.0.0/16
-        - fd00:10:244::/56
+      - fd31:e17c:f07f:8b6d::/64 # random ULA subnet
+      - 10.209.0.0/16
+    serviceSubnets:
+      # WARNING: IPv6 service subnet cannot be larger than /108 (previous discussion suggested /112)
+      #   see linked configs from https://github.com/siderolabs/talos/issues/8115#issuecomment-2068026656
+      - fd31:e17c:f07f:2dc0:4e2b:2ebc:cbc0:0/108 # random ULA subnet
+      - 10.213.0.0/16
+  etcd:
+    advertisedSubnets:
+      - fd31:e17c:f07f:1::/64 # primary ULA subnet
+      - 192.168.10.0/24
   proxy:
     disabled: true
   inlineManifests:
