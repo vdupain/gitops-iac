@@ -8,8 +8,8 @@ machine:
         - fd31:e17c:f07f:1::/64 # primary ULA subnet
         - 192.168.10.0/24
 
-  sysctls:
-    net.ipv6.conf.all.forwarding: 1
+  #sysctls:
+  #  net.ipv6.conf.all.forwarding: 1
   network:
     interfaces:
       - deviceSelector:

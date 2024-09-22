@@ -7,8 +7,8 @@ machine:
         - 2a01:cb0c:81d1:a8fb::/64
         - fd31:e17c:f07f:1::/64 # primary ULA subnet
         - 192.168.10.0/24
-  sysctls:
-    net.ipv6.conf.all.forwarding: 1
+  #sysctls:
+  #  net.ipv6.conf.all.forwarding: 1
   network:
     interfaces:
       - deviceSelector:
@@ -40,14 +40,16 @@ cluster:
   network:
     cni:
       name: none
+    # The pod subnet CIDR
     podSubnets:
       - fd31:e17c:f07f:8b6d::/64 # random ULA subnet
-      - 10.209.0.0/16
+      - 10.244.0.0/16
+    # The service subnet CIDR
     serviceSubnets:
       # WARNING: IPv6 service subnet cannot be larger than /108 (previous discussion suggested /112)
       #   see linked configs from https://github.com/siderolabs/talos/issues/8115#issuecomment-2068026656
       - fd31:e17c:f07f:2dc0:4e2b:2ebc:cbc0:0/108 # random ULA subnet
-      - 10.213.0.0/16
+      - 10.96.0.0/12
   etcd:
     advertisedSubnets:
       - fd31:e17c:f07f:1::/64 # primary ULA subnet
