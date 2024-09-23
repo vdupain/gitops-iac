@@ -1,0 +1,70 @@
+cluster = {
+  gateway = "192.168.10.1"
+}
+
+vms = {
+  "k8s-cp-0" = {
+    host_node     = "pve3"
+    machine_type  = "controlplane"
+    ip            = "192.168.10.220"
+    vm_id         = 1000
+    cpu           = 4
+    ram_dedicated = 4096
+    disk_size     = 10
+  }
+  "k8s-cp-1" = {
+    host_node     = "pve3"
+    machine_type  = "controlplane"
+    ip            = "192.168.10.221"
+    vm_id         = 1001
+    cpu           = 4
+    ram_dedicated = 4096
+    disk_size     = 10
+  }
+  "k8s-cp-2" = {
+    host_node     = "pve3"
+    machine_type  = "controlplane"
+    ip            = "192.168.10.222"
+    vm_id         = 1002
+    cpu           = 4
+    ram_dedicated = 4096
+    disk_size     = 10
+  }
+  "k8s-worker-0" = {
+    host_node     = "pve3"
+    machine_type  = "worker"
+    ip            = "192.168.10.223"
+    vm_id         = 1003
+    cpu           = 2
+    ram_dedicated = 2048
+    disk_size     = 10
+  }
+  "k8s-worker-1" = {
+    host_node     = "pve3"
+    machine_type  = "worker"
+    ip            = "192.168.10.224"
+    vm_id         = 1004
+    cpu           = 2
+    ram_dedicated = 2048
+    disk_size     = 10
+  }
+  "k8s-worker-2" = {
+    host_node     = "pve3"
+    machine_type  = "worker"
+    ip            = "192.168.10.225"
+    vm_id         = 1005
+    cpu           = 2
+    ram_dedicated = 2048
+    disk_size     = 10
+  }
+  "k8s-worker-gpu" = {
+    host_node     = "pve3"
+    machine_type  = "worker"
+    ip            = "192.168.10.226"
+    vm_id         = 1006
+    cpu           = 2
+    ram_dedicated = 2048
+    disk_size     = 10
+    gpu           = true
+  }
+}
