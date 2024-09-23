@@ -19,8 +19,10 @@ data:
       hostRoot: /sys/fs/cgroup
     ipam:
       mode: kubernetes
-    l2announcements:
-      enabled: true
+    # cilium l2 announcements: the feature currently does not support IPv6/NDP
+    # https://docs.cilium.io/en/latest/network/l2-announcements/#limitations
+    #l2announcements:
+    #  enabled: true
     externalIPs:
       enabled: true
     ipv6:
