@@ -2,3 +2,30 @@ cluster = {
   name     = "talos-proxmox-cluster"
   endpoint = "192.168.10.220"
 }
+
+nodes = {
+  "k8s-cp-0" = {
+    install_disk = "/dev/sda"
+    hostname     = "cp-0"
+    machine_type = "controlplane"
+    ip           = "192.168.10.220"
+  },
+  "k8s-cp-1" = {
+    install_disk = "/dev/sda"
+    hostname     = "cp-1"
+    machine_type = "controlplane"
+    ip           = "192.168.10.221"
+  },
+  "k8s-worker-0" = {
+    install_disk = "/dev/sda"
+    hostname     = "worker-0"
+    machine_type = "worker"
+    ip           = "192.168.10.222"
+  },
+  "k8s-worker-1" = {
+    install_disk = "/dev/sda"
+    hostname     = "worker-1"
+    machine_type = "worker"
+    ip           = "192.168.10.223"
+  },
+}
