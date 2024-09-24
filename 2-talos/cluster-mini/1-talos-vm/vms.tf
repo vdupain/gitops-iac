@@ -43,6 +43,17 @@ resource "proxmox_virtual_environment_vm" "vms" {
     file_id      = proxmox_virtual_environment_download_file.this["${each.value.host_node}_${each.value.gpu == true ? local.image_nvidia_id : local.image_id}"].id
   }
 
+  disk {
+    datastore_id = "local-lvm"
+    interface    = "scsi1"
+    iothread     = true
+    cache        = "writethrough"
+    discard      = "on"
+    ssd          = true
+    file_format  = "raw"
+    size         = 10
+  }
+
   boot_order = ["scsi0"]
 
   operating_system {

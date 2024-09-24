@@ -37,6 +37,7 @@ resource "talos_machine_configuration_apply" "controlplane" {
       cilium_install = file("${path.module}/kubernetes/cilium-install.yaml")
     }),
     file("${path.module}/config/falco-patch.yaml"),
+    file("${path.module}/config/storage-patch.yaml"),
   ]
 }
 
@@ -52,7 +53,8 @@ resource "talos_machine_configuration_apply" "worker" {
     templatefile("${path.module}/config/worker.yaml.tmpl", {
       hostname     = each.value.hostname
       install_disk = each.value.install_disk
-    })
+    }),
+    file("${path.module}/config/storage-patch.yaml"),
   ]
 }
 
