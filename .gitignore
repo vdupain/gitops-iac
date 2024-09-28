@@ -33,9 +33,11 @@ override.tf.json
 .terraformrc
 terraform.rc
 
+# Ignore terraform locks
+.terraform.lock.hcl
+
 
 .envrc
-.tool-versions
 kubeconfig-*
 talosconfig-*
 
