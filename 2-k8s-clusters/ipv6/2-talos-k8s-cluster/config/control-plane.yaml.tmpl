@@ -1,0 +1,65 @@
+machine:
+  install:
+    disk: ${install_disk}
+  kubelet:
+    nodeIP:
+      validSubnets:
+        - 2a01:cb0c:81d1:a8fb::/64
+        - fd31:e17c:f07f:1::/64 # primary ULA subnet
+        - 192.168.10.0/24
+  #sysctls:
+  #  net.ipv6.conf.all.forwarding: 1
+  network:
+    interfaces:
+      - deviceSelector:
+          busPath: "0*"
+        dhcp: true
+        dhcpOptions:
+          ipv4: false
+          ipv6: true
+    hostname: ${hostname}
+# https://www.talos.dev/v1.7/talos-guides/configuration/time-sync/#additional-configuration
+  time:
+    servers:
+      - /dev/ptp0
+
+cluster:
+  allowSchedulingOnControlPlanes: true
+  # listen on IPv6 interfaces
+  # TODO: set up firewall to deny non-local connections
+  apiServer:
+    extraArgs:
+      bind-address: "::"
+  controllerManager:
+    extraArgs:
+      bind-address: "::1"
+      node-cidr-mask-size-ipv6: "80" # defaults to /64 - whole assigned ULA subnet
+  scheduler:
+    extraArgs:
+      bind-address: "::1"
+  network:
+    cni:
+      name: none
+    # The pod subnet CIDR
+    podSubnets:
+      - fd31:e17c:f07f:8b6d::/64 # random ULA subnet
+      - 10.244.0.0/16
+    # The service subnet CIDR
+    serviceSubnets:
+      # WARNING: IPv6 service subnet cannot be larger than /108 (previous discussion suggested /112)
+      #   see linked configs from https://github.com/siderolabs/talos/issues/8115#issuecomment-2068026656
+      - fd31:e17c:f07f:2dc0:4e2b:2ebc:cbc0:0/108 # random ULA subnet
+      - 10.96.0.0/12
+  etcd:
+    advertisedSubnets:
+      - fd31:e17c:f07f:1::/64 # primary ULA subnet
+      - 192.168.10.0/24
+  proxy:
+    disabled: true
+  inlineManifests:
+  - name: cilium-values
+    contents: |
+      ${indent(6, cilium_values)}
+  - name: cilium-bootstrap
+    contents: |
+      ${indent(6, cilium_install)}

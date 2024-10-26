@@ -23,18 +23,18 @@ module "talos_k8s" {
   nodes = var.nodes
 }
 
-module "fluxcd" {
-  depends_on = [module.talos_k8s.talos_cluster_health]
-  source     = "./fluxcd"
+# module "fluxcd" {
+#   depends_on = [module.talos_k8s.talos_cluster_health]
+#   source     = "./fluxcd"
 
-  providers = {
-    kubernetes = kubernetes
-  }
+#   providers = {
+#     kubernetes = kubernetes
+#   }
 
-  cluster = {
-    name = var.cluster.name
-  }
+#   cluster = {
+#     name = var.cluster.name
+#   }
 
-  github = var.github
+#   github = var.github
 
-}
+# }
