@@ -3,12 +3,10 @@ resource "proxmox_virtual_environment_vm" "vms" {
 
   node_name = each.value.host_node
 
-  name        = each.key
-  description = each.value.machine_type
-  tags        = ["terraform", "talos", "k8s", "${each.value.machine_type}"]
+  name        = "${var.cluster.name}-${each.key}"
+  tags        = ["terraform", "talos", "k8s", "${each.value.machine_type}", "${var.cluster.name}"]
   on_boot     = true
   started     = true
-  vm_id       = each.value.vm_id
 
   machine       = "q35"
   scsi_hardware = "virtio-scsi-single"

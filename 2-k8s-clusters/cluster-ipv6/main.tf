@@ -4,6 +4,7 @@ module "vms" {
   proxmox = var.proxmox
 
   cluster = {
+    name     = var.cluster.name
     gateway = var.cluster.gateway
   }
 
@@ -20,7 +21,7 @@ module "talos_k8s" {
     endpoint = var.cluster.endpoint
   }
 
-  nodes = var.nodes
+  nodes = var.vms
 }
 
 # module "fluxcd" {
