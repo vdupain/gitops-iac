@@ -70,3 +70,4 @@ resource "talos_cluster_kubeconfig" "this" {
   client_configuration = talos_machine_secrets.this.client_configuration
   node                 = [for k, v in var.nodes : v.ip if v.machine_type == "controlplane"][0]
 }
+

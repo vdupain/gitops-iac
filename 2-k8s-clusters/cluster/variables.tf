@@ -42,3 +42,12 @@ variable "nodes" {
     gpu          = optional(bool, false)
   }))
 }
+
+variable "github" {
+  description = "Github configuration"
+  type = object({
+    token      = string
+    org        = string
+    repository = string
+  })
+}
