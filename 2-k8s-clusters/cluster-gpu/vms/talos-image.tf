@@ -2,13 +2,13 @@ locals {
   factory_url = "https://factory.talos.dev"
   platform    = "nocloud"
   arch        = "amd64"
-  version     = "v1.7.6"
+  version     = "v1.8.0"
 
-  schematic    = file("schematic.yaml")
+  schematic    = file("${path.module}/schematic.yaml")
   schematic_id = jsondecode(data.http.schematic_id.response_body)["id"]
   image_id     = "${local.schematic_id}_${local.version}"
 
-  schematic_nvidia    = file("schematic-nvidia.yaml")
+  schematic_nvidia    = file("${path.module}/schematic-nvidia.yaml")
   schematic_nvidia_id = jsondecode(data.http.schematic_nvidia_id.response_body)["id"]
   image_nvidia_id     = "${local.schematic_nvidia_id}_${local.version}"
 }
@@ -32,7 +32,7 @@ resource "proxmox_virtual_environment_download_file" "this" {
   content_type = "iso"
   datastore_id = "local"
 
-  file_name               = "talos-${split("_", each.key)[1]}-${split("_", each.key)[2]}-${local.platform}-${local.arch}.img"
+  file_name               = "${var.cluster.name}-talos-${split("_", each.key)[1]}-${split("_", each.key)[2]}-${local.platform}-${local.arch}.img"
   url                     = "${local.factory_url}/image/${split("_", each.key)[1]}/${split("_", each.key)[2]}/${local.platform}-${local.arch}.raw.gz"
   decompression_algorithm = "gz"
   overwrite               = false

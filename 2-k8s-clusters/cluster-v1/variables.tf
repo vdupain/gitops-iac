@@ -28,8 +28,8 @@ variable "vms" {
     ram_dedicated = number
     disk_size     = number
     gpu           = optional(bool, false)
-    install_disk = string
-    hostname     = optional(string)
+    install_disk  = string
+    hostname      = optional(string)
   }))
 }
 

@@ -1,0 +1,6 @@
+customization:
+  systemExtensions:
+    officialExtensions:
+      - siderolabs/nvidia-container-toolkit
+      - siderolabs/nonfree-kmod-nvidia
+      - siderolabs/qemu-guest-agent

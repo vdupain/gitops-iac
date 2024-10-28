@@ -4,7 +4,7 @@ module "vms" {
   proxmox = var.proxmox
 
   cluster = {
-    name     = var.cluster.name
+    name    = var.cluster.name
     gateway = var.cluster.gateway
   }
 

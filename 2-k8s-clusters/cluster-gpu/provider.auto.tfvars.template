@@ -1,0 +1,12 @@
+proxmox = {
+  endpoint     = "https://pve.domain"
+  insecure     = true
+  username     = "user"
+  api_token    = "user@pve!terraform=secret"
+}
+
+github = {
+  token      = "github_pat"
+  org        = "username"
+  repository = "repository"
+}
