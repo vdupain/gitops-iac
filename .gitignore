@@ -40,5 +40,5 @@ terraform.rc
 .envrc
 kubeconfig-*
 talosconfig-*
-
+**/.terraform/*
 .DS_Store
