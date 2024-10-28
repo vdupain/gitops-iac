@@ -8,7 +8,6 @@ resource "proxmox_virtual_environment_vm" "vms" {
   tags        = ["terraform", "talos", "k8s", "${each.value.machine_type}"]
   on_boot     = true
   started     = true
-  vm_id       = each.value.vm_id
 
   machine       = "q35"
   scsi_hardware = "virtio-scsi-single"

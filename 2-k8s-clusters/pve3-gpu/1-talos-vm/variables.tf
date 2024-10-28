@@ -21,7 +21,6 @@ variable "vms" {
     machine_type  = string
     datastore_id  = optional(string, "local-lvm")
     ip            = string
-    vm_id         = number
     cpu           = number
     ram_dedicated = number
     disk_size     = number
