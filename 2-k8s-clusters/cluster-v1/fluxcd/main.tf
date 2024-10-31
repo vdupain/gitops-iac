@@ -1,5 +1,6 @@
 resource "flux_bootstrap_git" "this" {
 
-  embedded_manifests = true
-  path               = "clusters/${var.cluster.name}"
+  embedded_manifests   = true
+  delete_git_manifests = false
+  path                 = "clusters/${var.cluster.name}"
 }

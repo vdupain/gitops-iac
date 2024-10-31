@@ -6,6 +6,8 @@ module "vms" {
   cluster = {
     name    = var.cluster.name
     gateway = var.cluster.gateway
+    cidr    = var.cluster.cidr
+    vlan_id = var.cluster.vlan_id
   }
 
   vms = var.vms
@@ -24,18 +26,18 @@ module "talos_k8s" {
   nodes = var.vms
 }
 
-# module "fluxcd" {
-#   depends_on = [module.talos_k8s.talos_cluster_health]
-#   source     = "./fluxcd"
+module "fluxcd" {
+  depends_on = [module.talos_k8s]
+  source     = "./fluxcd"
 
-#   providers = {
-#     kubernetes = kubernetes
-#   }
+  providers = {
+    kubernetes = kubernetes
+  }
 
-#   cluster = {
-#     name = var.cluster.name
-#   }
+  cluster = {
+    name = var.cluster.name
+  }
 
-#   github = var.github
+  github = var.github
 
-# }
+}

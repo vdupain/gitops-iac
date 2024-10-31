@@ -26,7 +26,8 @@ resource "proxmox_virtual_environment_vm" "vms" {
   }
 
   network_device {
-    bridge = "vmbr0"
+    bridge  = "vmbr0"
+    vlan_id = var.cluster.vlan_id
   }
 
   disk {
@@ -37,19 +38,19 @@ resource "proxmox_virtual_environment_vm" "vms" {
     discard      = "on"
     ssd          = true
     file_format  = "raw"
-    size         = each.value.disk_size
+    size         = each.value.os_disk_size
     file_id      = proxmox_virtual_environment_download_file.this["${each.value.host_node}_${each.value.gpu == true ? local.image_nvidia_id : local.image_id}"].id
   }
 
   disk {
-    datastore_id = "local-lvm"
+    datastore_id = each.value.datastore_id
     interface    = "scsi1"
     iothread     = true
     cache        = "writethrough"
     discard      = "on"
     ssd          = true
     file_format  = "raw"
-    size         = 10
+    size         = each.value.data_disk_size
   }
 
   boot_order = ["scsi0"]
@@ -62,7 +63,7 @@ resource "proxmox_virtual_environment_vm" "vms" {
     datastore_id = each.value.datastore_id
     ip_config {
       ipv4 {
-        address = "${each.value.ip}/24"
+        address = "${each.value.ip}/${var.cluster.cidr}"
         gateway = var.cluster.gateway
       }
     }
