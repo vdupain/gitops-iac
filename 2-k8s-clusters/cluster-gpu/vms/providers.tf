@@ -1,12 +1,3 @@
-terraform {
-  required_providers {
-    proxmox = {
-      source  = "bpg/proxmox"
-      version = ">=0.66.3"
-    }
-  }
-}
-
 provider "proxmox" {
   endpoint = var.proxmox.endpoint
   # using PROXMOX_VE_USERNAME instead of api token

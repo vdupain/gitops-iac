@@ -65,7 +65,7 @@ provider "registry.opentofu.org/hashicorp/http" {
 
 provider "registry.opentofu.org/hashicorp/kubernetes" {
   version     = "2.31.0"
-  constraints = "2.31.0"
+  constraints = ">= 2.31.0, 2.31.0"
   hashes = [
     "h1:z2qlqn6WbrjbezwQo4vvlwAgVUGz59klzDU4rlYhYi8=",
     "zh:0dd25babf78a88a61dd329b8c18538a295ea63630f1b69575e7898c89307da39",

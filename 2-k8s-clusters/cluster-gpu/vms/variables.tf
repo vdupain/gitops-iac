@@ -13,19 +13,22 @@ variable "cluster" {
   type = object({
     name    = string
     gateway = string
+    cidr    = number
+    vlan_id = optional(number, null)
   })
 }
 
 variable "vms" {
   description = "Configuration for cluster nodes"
   type = map(object({
-    host_node     = string
-    machine_type  = string
-    datastore_id  = optional(string, "local-lvm")
-    ip            = string
-    cpu           = number
-    ram_dedicated = number
-    disk_size     = number
-    gpu           = optional(bool, false)
+    host_node      = string
+    machine_type   = string
+    datastore_id   = optional(string, "local-lvm")
+    ip             = string
+    cpu            = number
+    ram_dedicated  = number
+    os_disk_size   = number
+    data_disk_size = number
+    gpu            = optional(bool, false)
   }))
 }

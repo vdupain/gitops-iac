@@ -1,6 +1,7 @@
 cluster = {
   name     = "cluster-gpu"
   gateway  = "192.168.10.1"
+  cidr     = 24
   endpoint = "192.168.10.210"
 }
 
@@ -11,9 +12,11 @@ vms = {
     ip            = "192.168.10.210"
     cpu           = 4
     ram_dedicated = 8196
-    disk_size     = 10
-    install_disk  = "/dev/sda"
-    hostname      = "cp-0"
+    os_disk_size   = 10
+    data_disk_size = 10
+    datastore_id   = "lvm-thin"
+    install_disk = "/dev/sda"
+    hostname     = "cp-0"
   }
   "k8s-cp-1" = {
     host_node     = "pve3"
@@ -21,9 +24,11 @@ vms = {
     ip            = "192.168.10.211"
     cpu           = 4
     ram_dedicated = 8196
-    disk_size     = 10
-    install_disk  = "/dev/sda"
-    hostname      = "cp-1"
+    os_disk_size   = 10
+    data_disk_size = 10
+    datastore_id   = "lvm-thin"
+    install_disk = "/dev/sda"
+    hostname     = "cp-1"
   }
   "k8s-worker-0" = {
     host_node     = "pve3"
@@ -31,9 +36,11 @@ vms = {
     ip            = "192.168.10.212"
     cpu           = 4
     ram_dedicated = 4096
-    disk_size     = 10
-    install_disk  = "/dev/sda"
-    hostname      = "worker-0"
+    os_disk_size   = 10
+    data_disk_size = 10
+    datastore_id   = "lvm-thin"
+    install_disk = "/dev/sda"
+    hostname     = "worker-0"
   }
   "k8s-worker-1" = {
     host_node     = "pve3"
@@ -41,9 +48,11 @@ vms = {
     ip            = "192.168.10.213"
     cpu           = 4
     ram_dedicated = 4096
-    disk_size     = 10
-    install_disk  = "/dev/sda"
-    hostname      = "worker-1"
-    gpu           = true
+    os_disk_size   = 10
+    data_disk_size = 10
+    datastore_id   = "lvm-thin"
+    install_disk = "/dev/sda"
+    hostname     = "worker-1"
+    gpu          = true
   }
 }
