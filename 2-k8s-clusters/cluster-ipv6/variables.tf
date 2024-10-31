@@ -33,3 +33,12 @@ variable "vms" {
     hostname      = optional(string)
   }))
 }
+
+variable "github" {
+  description = "Github configuration"
+  type = object({
+    token      = string
+    org        = string
+    repository = string
+  })
+}
