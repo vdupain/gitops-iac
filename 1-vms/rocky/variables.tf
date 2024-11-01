@@ -1,12 +1,14 @@
-variable "pve_endpoint" {
-  type = string
+variable "proxmox" {
+  type = object({
+    endpoint  = string
+    insecure  = bool
+    username  = string
+    password  = string
+    api_token = string
+  })
+  sensitive = true
 }
-variable "pve_api_token" {
-  type = string
-}
-variable "pve_api_user" {
-  type = string
-}
+
 variable "pve_nodes" {
   type = list(string)
 }
@@ -22,13 +24,7 @@ variable "vm_datastore_id" {
 variable "vm_disk_size" {
   type = number
 }
-variable "vm_id" {
-  type = number
-}
 variable "vm_memory_max" {
-  type = number
-}
-variable "vm_memory_min" {
   type = number
 }
 variable "vm_name" {

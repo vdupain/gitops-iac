@@ -3,7 +3,6 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   count       = var.vm_count
   name        = "${var.vm_name}-${count.index}"
   node_name   = var.pve_nodes[count.index]
-  vm_id       = sum([1000, count.index])
   description = "Managed by Terraform"
   tags        = ["terraform", "ubuntu"]
 
@@ -30,7 +29,6 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 
   network_device {
     bridge = "vmbr0"
-    #vlan_id   = var.net_vlan
   }
 
   disk {
@@ -44,12 +42,12 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
     size         = var.vm_disk_size
     file_id      = proxmox_virtual_environment_download_file.ubuntu_cloud_image[count.index].id
   }
+  
+  boot_order = ["scsi0"]
 
   operating_system {
     type = "l26"
   }
-
-  boot_order = ["scsi0"]
 
   initialization {
     ip_config {

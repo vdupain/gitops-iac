@@ -36,7 +36,6 @@ terraform.rc
 # Ignore terraform locks
 #.terraform.lock.hcl
 
-
 .envrc
 kubeconfig-*
 talosconfig-*
