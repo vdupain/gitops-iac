@@ -43,4 +43,5 @@ variable "pci" {
     path         = string
     subsystem_id = string
   }))
+  default = null
 }
