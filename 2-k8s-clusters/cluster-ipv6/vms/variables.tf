@@ -3,6 +3,7 @@ variable "proxmox" {
     endpoint  = string
     insecure  = bool
     username  = string
+    password  = string
     api_token = string
   })
   sensitive = true
@@ -11,12 +12,12 @@ variable "proxmox" {
 variable "cluster" {
   description = "Cluster configuration"
   type = object({
-    name    = string
-    gateway  = optional(string)
-    gateway_v6  = optional(string)
-    cidr     = number
-    cidr_v6     = number
-    vlan_id = optional(number, null)
+    name       = string
+    gateway    = optional(string)
+    gateway_v6 = optional(string)
+    cidr       = number
+    cidr_v6    = number
+    vlan_id    = optional(number, null)
   })
 }
 
@@ -46,4 +47,5 @@ variable "pci" {
     path         = string
     subsystem_id = string
   }))
+  default = null
 }
