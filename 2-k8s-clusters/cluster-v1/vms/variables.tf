@@ -3,7 +3,7 @@ variable "proxmox" {
     endpoint  = string
     insecure  = bool
     username  = string
-    password = string
+    password  = string
     api_token = string
   })
   sensitive = true
