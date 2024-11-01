@@ -1,5 +1,9 @@
+locals {
+  pci = (var.pci == null) ? {} : var.pci
+}
+
 resource "proxmox_virtual_environment_hardware_mapping_pci" "pci" {
-  for_each = var.pci
+  for_each = local.pci
   comment  = each.value.name
   name     = each.value.name
   map = [

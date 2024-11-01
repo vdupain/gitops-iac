@@ -30,6 +30,7 @@ resource "proxmox_virtual_environment_vm" "vms" {
     vlan_id = var.cluster.vlan_id
   }
 
+  # boot disk
   disk {
     datastore_id = each.value.datastore_id
     interface    = "scsi0"
@@ -42,6 +43,7 @@ resource "proxmox_virtual_environment_vm" "vms" {
     file_id      = proxmox_virtual_environment_download_file.this["${each.value.host_node}_${each.value.gpu == true ? local.image_nvidia_id : local.image_id}"].id
   }
 
+  # data disk
   disk {
     datastore_id = each.value.datastore_id
     interface    = "scsi1"
