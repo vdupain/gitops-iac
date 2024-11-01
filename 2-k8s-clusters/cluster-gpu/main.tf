@@ -11,7 +11,7 @@ module "vms" {
   }
 
   vms = var.vms
-
+  pci = var.pci
 }
 
 module "talos_k8s" {

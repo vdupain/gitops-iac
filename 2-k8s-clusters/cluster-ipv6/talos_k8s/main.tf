@@ -58,6 +58,26 @@ resource "talos_machine_configuration_apply" "worker" {
   ]
 }
 
+resource "talos_machine_configuration_apply" "worker-gpu" {
+  client_configuration        = talos_machine_secrets.this.client_configuration
+  machine_configuration_input = data.talos_machine_configuration.worker.machine_configuration
+  for_each = {
+    for k, v in var.nodes : k => v
+    if v.machine_type == "worker" && v.gpu == true
+  }
+  node = each.value.ip
+  config_patches = [
+    templatefile("${path.module}/config/worker.yaml.tmpl", {
+      hostname     = each.value.hostname
+      install_disk = each.value.install_disk
+    }),
+    file("${path.module}/config/storage-patch.yaml"),
+    file("${path.module}/config/gpu-worker-patch.yaml"),
+    file("${path.module}/config/nvidia-default-runtimeclass.yaml"),
+  ]
+}
+
+
 resource "talos_machine_bootstrap" "this" {
   depends_on = [talos_machine_configuration_apply.controlplane]
 

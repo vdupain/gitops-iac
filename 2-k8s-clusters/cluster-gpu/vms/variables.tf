@@ -32,3 +32,15 @@ variable "vms" {
     gpu            = optional(bool, false)
   }))
 }
+
+variable "pci" {
+  description = "Configuration mapping PCI"
+  type = map(object({
+    name         = string
+    id           = string
+    iommu_group  = number
+    node         = string
+    path         = string
+    subsystem_id = string
+  }))
+}

@@ -25,3 +25,8 @@ resource "local_file" "kube_config" {
   filename        = "output/kube-config.yaml"
   file_permission = "0600"
 }
+
+output "cluster_name" {
+  value     = var.cluster.name
+  sensitive = false
+}

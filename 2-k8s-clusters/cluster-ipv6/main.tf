@@ -6,10 +6,14 @@ module "vms" {
   cluster = {
     name    = var.cluster.name
     gateway = var.cluster.gateway
+    gateway_v6 = var.cluster.gateway_v6
+    cidr    = var.cluster.cidr
+    cidr_v6    = var.cluster.cidr_v6
+    vlan_id = var.cluster.vlan_id
   }
 
   vms = var.vms
-
+  pci = var.pci
 }
 
 module "talos_k8s" {
