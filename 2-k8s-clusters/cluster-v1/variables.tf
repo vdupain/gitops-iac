@@ -57,4 +57,5 @@ variable "github" {
     org        = string
     repository = string
   })
+  default = null
 }

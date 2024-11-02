@@ -30,10 +30,6 @@ module "fluxcd" {
   depends_on = [module.talos_k8s]
   source     = "./fluxcd"
 
-  providers = {
-    kubernetes = kubernetes
-  }
-
   cluster = {
     name = var.cluster.name
   }

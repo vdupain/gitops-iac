@@ -1,5 +1,5 @@
 module "vms" {
-  source = "./vms"
+  source = "./modules/vms"
 
   proxmox = var.proxmox
 
@@ -16,7 +16,7 @@ module "vms" {
 
 module "talos_k8s" {
   depends_on = [module.vms]
-  source     = "./talos_k8s"
+  source     = "./modules/talos_k8s"
 
   cluster = {
     name     = var.cluster.name
@@ -27,17 +27,13 @@ module "talos_k8s" {
 }
 
 module "fluxcd" {
+  count      = (var.github == null) ? 0 : 1
   depends_on = [module.talos_k8s]
-  source     = "./fluxcd"
-
-  providers = {
-    kubernetes = kubernetes
-  }
+  source     = "./modules/fluxcd"
 
   cluster = {
     name = var.cluster.name
   }
 
   github = var.github
-
 }
