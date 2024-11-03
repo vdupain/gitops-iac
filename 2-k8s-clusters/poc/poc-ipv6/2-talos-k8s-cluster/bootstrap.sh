@@ -2,4 +2,4 @@
 
 tofu output -raw kubeconfig > kubeconfig-talos-cluster
 tofu output -raw talosconfig > talosconfig-talos-cluster
-mkdir -p $HOME/.kube && cp kubeconfig-talos-cluster $HOME/.kube/cluster-ipv6.yaml
+mkdir -p $HOME/.kube && cp kubeconfig-talos-cluster $HOME/.kube/ipv6-cluster.yaml
