@@ -1,10 +1,10 @@
 variable "proxmox" {
   type = object({
-    endpoint  = string
-    insecure  = bool
-    username  = string
-    password  = string
-    api_token = string
+    endpoint  = optional(string)
+    insecure  = optional(bool)
+    username  = optional(string)
+    password  = optional(string)
+    api_token = optional(string)
   })
   sensitive = true
 }
