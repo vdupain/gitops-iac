@@ -1,16 +1,18 @@
-variable "pve_endpoint" {
-  type = string
+variable "proxmox" {
+  type = object({
+    endpoint  = optional(string)
+    insecure  = optional(bool)
+    username  = optional(string)
+    password  = optional(string)
+    api_token = optional(string)
+  })
+  sensitive = true
 }
-variable "pve_api_token" {
-  type = string
-}
-variable "pve_api_user" {
-  type = string
-}
+
 variable "pve_node" {
   type = string
 }
-variable "vm_cpu_cores_number" {
+variable "vm_cpu_cores" {
   type = number
 }
 variable "vm_cpu_type" {
@@ -25,10 +27,7 @@ variable "vm_disk_size" {
 variable "vm_id" {
   type = number
 }
-variable "vm_memory_max" {
-  type = number
-}
-variable "vm_memory_min" {
+variable "vm_memory" {
   type = number
 }
 variable "vm_name" {
@@ -37,23 +36,12 @@ variable "vm_name" {
 variable "vm_hostname" {
   type = string
 }
-variable "vm_ip" {
-  type = number
+variable "vm_ipv4_address" {
+  type = string
 }
-variable "dns" {
-  type    = list(string)
-  default = ["192.168.10.4"]
+variable "vm_ipv4_gateway" {
+  type = string
 }
-variable "net_cidr" {
-  type    = string
-  default = "192.168.10.0/24"
+variable "vm_dns" {
+  type = list(string)
 }
-variable "net_cidr_prefix" {
-  type    = number
-  default = 24
-}
-variable "net_gateway" {
-  type    = string
-  default = "192.168.10.1"
-}
-

@@ -1,6 +1,6 @@
 resource "proxmox_virtual_environment_vm" "rocky_ffmpeg_streamer_vm" {
 
-  name        = "${var.vm_hostname}"
+  name        = var.vm_hostname
   node_name   = var.pve_node
   vm_id       = var.vm_id
   description = "Managed by Terraform"
@@ -9,7 +9,7 @@ resource "proxmox_virtual_environment_vm" "rocky_ffmpeg_streamer_vm" {
   started = true
   on_boot = true
 
-  machine = "q35"
+  machine       = "q35"
   scsi_hardware = "virtio-scsi-single"
   bios          = "seabios"
 
@@ -18,12 +18,12 @@ resource "proxmox_virtual_environment_vm" "rocky_ffmpeg_streamer_vm" {
   }
 
   cpu {
-    type    = var.vm_cpu_type
-    cores   = var.vm_cpu_cores_number
+    type  = var.vm_cpu_type
+    cores = var.vm_cpu_cores
   }
 
   memory {
-    dedicated = var.vm_memory_max
+    dedicated = var.vm_memory
   }
 
   network_device {
@@ -48,22 +48,21 @@ resource "proxmox_virtual_environment_vm" "rocky_ffmpeg_streamer_vm" {
     type = "l26"
   }
 
-#  usb {
-#    #host = "08bb:29c0"
-#    mapping = "usb_audio_codec"
-#    usb3    = false
-#  }
+  usb {
+    mapping = "usb_audio_codec"
+    usb3    = false
+  }
 
   initialization {
     ip_config {
       ipv4 {
-        address = join("/", [cidrhost(var.net_cidr, var.vm_ip), var.net_cidr_prefix])
-        gateway = var.net_gateway
+        address = var.vm_ipv4_address
+        gateway = var.vm_ipv4_gateway
       }
     }
 
     dns {
-      servers = var.dns
+      servers = var.vm_dns
     }
 
     datastore_id      = var.vm_datastore_id
